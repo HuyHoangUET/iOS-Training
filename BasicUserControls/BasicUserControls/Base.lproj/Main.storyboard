@@ -9,43 +9,6 @@
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="mVC-OE-gtH">
-            <objects>
-                <viewController id="Qre-u4-t3d" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="oDV-d2-908">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fQH-hb-StQ">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="XK9-hS-SlA">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XK9-hS-SlA" id="HD0-te-NAs">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="zmw-ot-Dcc"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="zmw-ot-Dcc" firstAttribute="trailing" secondItem="fQH-hb-StQ" secondAttribute="trailing" id="8Pz-L2-GTS"/>
-                            <constraint firstItem="fQH-hb-StQ" firstAttribute="leading" secondItem="zmw-ot-Dcc" secondAttribute="leading" id="UIo-O1-PFK"/>
-                            <constraint firstItem="zmw-ot-Dcc" firstAttribute="bottom" secondItem="fQH-hb-StQ" secondAttribute="bottom" id="bMS-p6-bAU"/>
-                            <constraint firstItem="fQH-hb-StQ" firstAttribute="top" secondItem="zmw-ot-Dcc" secondAttribute="top" id="l7F-Xk-jWW"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bAX-e2-rT0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-272" y="-8"/>
-        </scene>
-        <!--View Controller-->
         <scene sceneID="iPY-l2-QKt">
             <objects>
                 <viewController id="VFS-iY-qqb" sceneMemberID="viewController">
