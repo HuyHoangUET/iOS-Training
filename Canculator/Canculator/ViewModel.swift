@@ -34,7 +34,7 @@ class ViewModel {
     
     // input
     public func enterNumeral(_ numeral: Character, _ resultLabel: UILabel) {
-        if self.calculation == "=" {
+        if self.calculation == "=" || resultLabel.text == "Infinity" {
             cancel()
             resultLabel.text = "0"
         }
@@ -85,11 +85,10 @@ class ViewModel {
     }
     
     public func quotient(_ resultLabel: UILabel) {
-        if num2 != 0 {
-            num1 /= num2
-        } else {
+        if num2 == 0 {
             resultLabel.text = "Infinity"
-            self.cancel()
+        } else {
+            num1 /= num2
         }
     }
     
@@ -121,10 +120,14 @@ class ViewModel {
     
     public func showResult(_ resultLabel: UILabel) {
         let num: Int = Int(num1)
-        if num1 == Float(num) {
-            resultLabel.text = String(format: "%.0f", num1)
+        if resultLabel.text != "Infinity" {
+            if num1 == Float(num) {
+                resultLabel.text = String(format: "%.0f", num1)
+            } else {
+                resultLabel.text = String(num1)
+            }
         } else {
-            resultLabel.text = String(num1)
+            cancel()
         }
     }
     
