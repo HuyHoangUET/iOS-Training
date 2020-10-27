@@ -12,15 +12,18 @@ class ViewController: UIViewController {
     // MARK: - outlet
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var displayView: UIView!
-    @IBOutlet weak var ketBoardStackView: UIStackView!
+    @IBOutlet weak var keyboardStackView: UIStackView!
     @IBOutlet weak var displayBodyView: UIView!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var calculationLabel: UILabel!
 
     private let viewModel = ViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        displayBodyView.layer.cornerRadius = 5
+        displayBodyView.layer.borderWidth = 1
     }
     
     //MARK: - action
@@ -34,20 +37,7 @@ class ViewController: UIViewController {
     
     // Operators
     @IBAction func operatorButton(_ sender: UIButton) {
-        var calculation = ""
-        switch sender.tag {
-        case 0:
-            calculation = "/"
-        case 1:
-            calculation = "x"
-        case 2:
-            calculation = "-"
-        case 3:
-            calculation = "+"
-        default:
-            calculation = "="
-        }
-        viewModel.clickAnOperatorButton(calculation: calculation, resultLabel: resultLabel, calculationLabel: calculationLabel)
+        viewModel.clickAnOperatorButton(calculation: sender.currentTitle ?? "", resultLabel: resultLabel, calculationLabel: calculationLabel)
     }
     
     @IBAction func persentButton(_ sender: Any) {

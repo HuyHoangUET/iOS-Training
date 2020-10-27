@@ -21,16 +21,15 @@ class ViewModel {
             cancel()
             resultLabel.text = "0"
         }
-        if isHasOperator == false && resultLabel.text != "0" {
-            if resultLabel.text == "-0" {
-                resultLabel.text?.remove(at: resultLabel.text?.index(before: resultLabel.text?.endIndex ?? "".endIndex) ?? "".endIndex)
-                resultLabel.text?.append(String(numeral))
-            } else {
-                resultLabel.text?.append(String(numeral))
-            }
-        } else {
-            resultLabel.text = String(numeral)
+        
+        if numInput != 0 {
+            resultLabel.text?.removeAll()
+            numInput = 0
         }
+        if resultLabel.text == "0" {
+            resultLabel.text?.removeAll()
+        }
+        resultLabel.text?.insert(contentsOf: String(numeral), at: resultLabel.text?.endIndex ?? "".endIndex)
     }
     
     func enterDecimol(resultLabel: UILabel) {
@@ -45,17 +44,16 @@ class ViewModel {
         }
     }
     
-    func setNumInput(resultLbl: UILabel) {
-        self.numInput = ((resultLbl.text ?? "0") as NSString).floatValue
+    func setNumInput(resultLabel: UILabel) {
+        self.numInput = ((resultLabel.text ?? "0") as NSString).floatValue
     }
     
     func setNumbers(num: Float) {
-        if isHasOperator {
-            self.num2 = numInput
+        if !isHasOperator || calculation == "=" {
+            num1 = numInput
         } else {
-            self.num1 = numInput
+            num2 = numInput
         }
-        numInput = 0
     }
     
     // algorithm
@@ -87,12 +85,6 @@ class ViewModel {
     }
     
     func absoluted(resultLabel: UILabel) {
-        if resultLabel.text?.first == "-" {
-            resultLabel.text?.remove(at: resultLabel.text?.startIndex ?? "".startIndex)
-        } else {
-            resultLabel.text = "-" + (resultLabel.text ?? "")
-        }
-        num1 = 0 - num1
     }
     
     // output
@@ -131,11 +123,11 @@ class ViewModel {
     }
     
     func showCalculation(calculationLabel: UILabel) {
-        calculationLabel.text = self.calculation
+        calculationLabel.text = calculation
     }
     
     func clickAnOperatorButton(calculation: String, resultLabel: UILabel, calculationLabel: UILabel) {
-        setNumInput(resultLbl: resultLabel)
+        setNumInput(resultLabel: resultLabel)
         setNumbers(num: numInput)
         getResult(calculation: calculation, resultLabel: resultLabel)
         showResult(resultLabel: resultLabel)

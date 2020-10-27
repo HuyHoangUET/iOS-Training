@@ -342,7 +342,7 @@
                         <outlet property="calculationLabel" destination="hLN-N0-jUg" id="QuQ-tH-gyX"/>
                         <outlet property="displayBodyView" destination="H8i-fD-zoO" id="V3M-lh-gFd"/>
                         <outlet property="displayView" destination="j9V-W0-7Jq" id="7jP-Cn-fyb"/>
-                        <outlet property="ketBoardStackView" destination="KST-Qu-oGX" id="GQI-fn-XmM"/>
+                        <outlet property="keyboardStackView" destination="KST-Qu-oGX" id="GQI-fn-XmM"/>
                         <outlet property="mainStackView" destination="unh-hk-1hP" id="4DC-6w-1OC"/>
                         <outlet property="resultLabel" destination="bgl-u9-syh" id="e3B-l3-KGV"/>
                     </connections>
