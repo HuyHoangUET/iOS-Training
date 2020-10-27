@@ -75,7 +75,7 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = Views;
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
