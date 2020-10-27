@@ -12,8 +12,8 @@ class ViewModel {
     private var num1: Float = 0
     private var num2: Float = 0
     private var numInput: Float = 0
-    private var isHasOperator: Bool = false
-    private var calculation: String = ""
+    private var isHasOperator = false
+    private var calculation = ""
     
     // input
     func enterNumeral(numeral: Int, resultLabel: UILabel) {
