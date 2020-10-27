@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  Canculator
+//  Calculator
 //
 //  Created by LTT on 10/23/20.
 //

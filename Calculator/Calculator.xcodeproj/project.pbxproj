@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		25C15F0825426B1A0052C974 /* Canculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Canculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25C15F0825426B1A0052C974 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C15F0B25426B1A0052C974 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C15F0D25426B1A0052C974 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		25C15F0F25426B1A0052C974 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		25C15EFF25426B1A0052C974 = {
 			isa = PBXGroup;
 			children = (
-				25C15F0A25426B1A0052C974 /* Canculator */,
+				25C15F0A25426B1A0052C974 /* Calculator */,
 				25C15F0925426B1A0052C974 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,12 +50,12 @@
 		25C15F0925426B1A0052C974 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				25C15F0825426B1A0052C974 /* Canculator.app */,
+				25C15F0825426B1A0052C974 /* Calculator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		25C15F0A25426B1A0052C974 /* Canculator */ = {
+		25C15F0A25426B1A0052C974 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
 				25C15F232542726B0052C974 /* Views */,
@@ -68,7 +68,7 @@
 				25C15F1925426B1B0052C974 /* Info.plist */,
 				25C15F2025426D240052C974 /* ViewModel.swift */,
 			);
-			path = Canculator;
+			path = Calculator;
 			sourceTree = "<group>";
 		};
 		25C15F232542726B0052C974 /* Views */ = {
@@ -81,9 +81,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		25C15F0725426B1A0052C974 /* Canculator */ = {
+		25C15F0725426B1A0052C974 /* Calculator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 25C15F1C25426B1B0052C974 /* Build configuration list for PBXNativeTarget "Canculator" */;
+			buildConfigurationList = 25C15F1C25426B1B0052C974 /* Build configuration list for PBXNativeTarget "Calculator" */;
 			buildPhases = (
 				25C15F0425426B1A0052C974 /* Sources */,
 				25C15F0525426B1A0052C974 /* Frameworks */,
@@ -93,9 +93,9 @@
 			);
 			dependencies = (
 			);
-			name = Canculator;
-			productName = Canculator;
-			productReference = 25C15F0825426B1A0052C974 /* Canculator.app */;
+			name = Calculator;
+			productName = Calculator;
+			productReference = 25C15F0825426B1A0052C974 /* Calculator.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -112,7 +112,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 25C15F0325426B1A0052C974 /* Build configuration list for PBXProject "Canculator" */;
+			buildConfigurationList = 25C15F0325426B1A0052C974 /* Build configuration list for PBXProject "Calculator" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -125,7 +125,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				25C15F0725426B1A0052C974 /* Canculator */,
+				25C15F0725426B1A0052C974 /* Calculator */,
 			);
 		};
 /* End PBXProject section */
@@ -299,12 +299,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Canculator/Info.plist;
+				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vn.hoang.test.Canculator;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.hoang.test.Calculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -317,12 +317,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Canculator/Info.plist;
+				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vn.hoang.test.Canculator;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.hoang.test.Calculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -332,7 +332,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		25C15F0325426B1A0052C974 /* Build configuration list for PBXProject "Canculator" */ = {
+		25C15F0325426B1A0052C974 /* Build configuration list for PBXProject "Calculator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				25C15F1A25426B1B0052C974 /* Debug */,
@@ -341,7 +341,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		25C15F1C25426B1B0052C974 /* Build configuration list for PBXNativeTarget "Canculator" */ = {
+		25C15F1C25426B1B0052C974 /* Build configuration list for PBXNativeTarget "Calculator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				25C15F1D25426B1B0052C974 /* Debug */,

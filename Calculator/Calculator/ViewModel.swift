@@ -1,6 +1,6 @@
 //
 //  ViewModel.swift
-//  Canculator
+//  Calculator
 //
 //  Created by LTT on 10/23/20.
 //
@@ -19,7 +19,7 @@ class ViewModel {
     func enterNumeral(numeral: Int, resultLabel: UILabel) {
         if self.calculation == "=" || resultLabel.text == "Infinity" {
             cancel()
-            resultLabel.text = "0"
+            resultLabel.text?.removeAll()
         }
         
         if numInput != 0 {
