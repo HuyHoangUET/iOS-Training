@@ -8,7 +8,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
     // MARK: - outlet
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var displayView: UIView!
@@ -18,14 +17,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var calculationLabel: UILabel!
 
     private let viewModel = ViewModel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         displayBodyView.layer.cornerRadius = 5
         displayBodyView.layer.borderWidth = 1
     }
-    
     //MARK: - action
     @IBAction func cancelButton(_ sender: Any) {
         viewModel.cancel()
@@ -34,17 +31,16 @@ class ViewController: UIViewController {
         viewModel.showResult(resultLabel: resultLabel)
         viewModel.showCalculation(calculationLabel: calculationLabel)
     }
-    
     // Operators
     @IBAction func operatorButton(_ sender: UIButton) {
-        viewModel.clickAnOperatorButton(calculation: sender.currentTitle ?? "", resultLabel: resultLabel, calculationLabel: calculationLabel)
+        viewModel.clickAnOperatorButton(calculation: sender.currentTitle ?? "",
+                                        resultLabel: resultLabel,
+                                        calculationLabel: calculationLabel)
     }
-    
     @IBAction func persentButton(_ sender: Any) {
         viewModel.percent()
         viewModel.showResult(resultLabel: resultLabel)
     }
-    
     @IBAction func absoluteButton(_ sender: Any) {
         viewModel.absoluted(resultLabel: resultLabel)
     }
@@ -57,10 +53,7 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-    
     @IBAction func decimolButton(_ sender: Any) {
         viewModel.enterDecimol(resultLabel: resultLabel)
     }
 }
-

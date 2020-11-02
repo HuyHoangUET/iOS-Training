@@ -14,7 +14,6 @@ class ViewModel {
     private var numInput: Float = 0
     private var isHasOperator = false
     private var calculation = ""
-    
     // input
     func enterNumeral(numeral: Int, resultLabel: UILabel) {
         if self.calculation == "=" || resultLabel.text == "Infinity" {
@@ -66,7 +65,7 @@ class ViewModel {
     }
     
     func product() {
-        num1 = num1 * num2
+        num1 *= num2
     }
     
     func quotient(resultLabel: UILabel) {
