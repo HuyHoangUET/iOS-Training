@@ -45,6 +45,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="rUb-jR-r6G" secondAttribute="trailing" id="myH-yV-8oj"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="imageView" destination="rUb-jR-r6G" id="RIB-kc-Ilt"/>
                                         </connections>
