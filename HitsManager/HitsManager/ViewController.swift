@@ -59,7 +59,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemsWidth = screenWidth - paddingSpace
         if sellectedCell == indexPath {
-            let cellWidth = screenWidth - (paddingSpace/2)
+            let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
             let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
             return cell.selectCell(cellWidth: cellWidth)
         }
