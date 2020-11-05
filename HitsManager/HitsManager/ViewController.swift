@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var hits = [Hit]()
     let dataManager = DataManager()
     let numberOfItemsInRow = 3
-    let paddingSpace = CGFloat(2)
+    let paddingSpace = CGFloat(12)
     let screenWidth = UIScreen.main.bounds.width
     var sellectedCell = IndexPath()
     override func viewDidLoad() {
@@ -51,15 +51,15 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 // Set layout for item
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 20, left: paddingSpace, bottom: 10, right: paddingSpace)
+        return UIEdgeInsets(top: 20, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsWidth = screenWidth - (paddingSpace * CGFloat((numberOfItemsInRow + 1)))
+        let itemsWidth = screenWidth - paddingSpace
         if sellectedCell == indexPath {
-            let cellWidth = screenWidth - (paddingSpace * 2)
+            let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
             let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
             return cell.selectCell(cellWidth: cellWidth)
         }
@@ -69,11 +69,11 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return paddingSpace
+        return paddingSpace/CGFloat(numberOfItemsInRow + 1)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return paddingSpace
+        return paddingSpace/CGFloat(numberOfItemsInRow + 1)
     }
 }
 

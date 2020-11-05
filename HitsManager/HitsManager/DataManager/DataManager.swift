@@ -9,8 +9,6 @@ import Foundation
 import Alamofire
 import AlamofireImage
 
-var completionHandler: ((Data) -> Void)?
-
 class DataManager {
     func get(url: String, completion: @escaping (Data) -> Void){
         guard url != "" else { return }
@@ -18,10 +16,6 @@ class DataManager {
             response in
             guard let data = response.data else { return }
             completion(data)
-            completionHandler = completion
-            DispatchQueue.main.async {
-                
-            }
         }
     }
     func getImage(url: String, completion: @escaping (UIImage) ->()) {
