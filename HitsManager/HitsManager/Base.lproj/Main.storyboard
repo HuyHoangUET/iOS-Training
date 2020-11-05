@@ -19,8 +19,8 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bgj-Vy-Ghu">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9cp-kx-AR7">
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9cp-kx-AR7">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -34,10 +34,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rUb-jR-r6G">
+                                                <imageView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rUb-jR-r6G">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                    <gestureRecognizers/>
                                                 </imageView>
                                             </subviews>
+                                            <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstItem="rUb-jR-r6G" firstAttribute="top" secondItem="ZY3-os-p1b" secondAttribute="top" id="EJf-Rp-MMa"/>
                                                 <constraint firstAttribute="bottom" secondItem="rUb-jR-r6G" secondAttribute="bottom" id="b9f-du-1Hl"/>
@@ -45,12 +47,15 @@
                                                 <constraint firstAttribute="trailing" secondItem="rUb-jR-r6G" secondAttribute="trailing" id="myH-yV-8oj"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
                                         <connections>
-                                            <outlet property="imageView" destination="rUb-jR-r6G" id="RIB-kc-Ilt"/>
+                                            <outlet property="imageView" destination="rUb-jR-r6G" id="VCT-5j-zDm"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="jhL-iS-rpw"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -64,6 +69,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="bgj-Vy-Ghu" id="HFT-ji-CVg"/>
+                        <outlet property="mainView" destination="8bC-Xf-vdC" id="yKv-bc-Xpk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

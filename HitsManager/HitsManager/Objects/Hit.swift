@@ -10,9 +10,13 @@ import Foundation
 struct Hit: Decodable {
     let id: Int
     let imageURL: String
+    let imageWidth: Float
+    let imageHeight: Float
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case imageURL = "largeImageURL"
+        case imageWidth = "imageWidth"
+        case imageHeight = "imageHeight"
     }
 }
