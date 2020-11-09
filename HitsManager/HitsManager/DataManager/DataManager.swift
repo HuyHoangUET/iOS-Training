@@ -29,18 +29,3 @@ class DataManager {
         }
     }
 }
-
-extension DataManager {
-    func getHits(url: String, completion: @escaping ([Hit]) -> ()) {
-        var hits = [Hit]()
-        get(url: url) { (data) in
-            do {
-                let result = try JSONDecoder().decode(Result.self, from: data)
-                hits = result.hits
-                completion(hits)
-            } catch {
-                print("get hits failed!")
-            }
-        }
-    }
-}

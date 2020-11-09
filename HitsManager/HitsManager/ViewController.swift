@@ -7,27 +7,32 @@
 
 import UIKit
 
-let apiURL = "https://pixabay.com/api/?key=13112092-54e8286568142add194090167&q=girl"
 
 class ViewController: UIViewController {
     // MARK: - outlet
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet var mainView: UIView!
     
-    var hits = [Hit]()
-    let dataManager = DataManager()
-    let numberOfItemsInRow = 3
-    let paddingSpace = CGFloat(12)
-    let screenWidth = UIScreen.main.bounds.width
-    var sellectedCell = IndexPath()
+
+    private let apiURL = "https://pixabay.com/api/?key=13112092-54e8286568142add194090167&q=girl"
+    private let viewModel = ViewModel()
+    private var curentPage = 1
+    private var page = 1
+    private var hits = [Hit]()
+    private let dataManager = DataManager()
+    private let numberOfItemsInRow = 3
+    private let paddingSpace = CGFloat(12)
+    private let screenWidth = UIScreen.main.bounds.width
+    private var sellectedCell = IndexPath()
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.prefetchDataSource = self
         
         // get data from api
-        dataManager.getHits(url: apiURL, completion: {[weak self] hits in
-            self?.hits = hits
+        viewModel.getHitsInPage(page: curentPage, url: apiURL, completion: {[weak self] hits in
+            self?.hits += hits
             self?.collectionView.reloadData()
         })
     }
@@ -44,6 +49,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         dataManager.getImage(url: hit.imageURL, completion: { image in
             cell.createCell(image: image)
         })
+        if indexPath.row >= hits.count - 1 {
+            page += 1
+        }
         return cell
     }
 }
@@ -80,13 +88,27 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 // Custom sellected cell
 extension ViewController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        sellectedCell.append(indexPath)
         sellectedCell = indexPath
         collectionView.performBatchUpdates(nil, completion: nil)
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        sellectedCell = IndexPath()
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
         cell.deSelectCell()
     }
 }
 
+// load more
+extension ViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        if page > curentPage {
+            curentPage += 1
+            viewModel.getHitsInPage(page: curentPage, url: apiURL) { (hits) in
+                self.hits += hits
+                DispatchQueue.main.async {
+                    collectionView.reloadItems(at: indexPaths)
+                }
+            }
+        }
+    }
+}
