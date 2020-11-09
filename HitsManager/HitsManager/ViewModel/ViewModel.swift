@@ -9,51 +9,59 @@ import Foundation
 import UIKit
 
 class ViewModel {
-    private let dataManager = DataManager()
-    var results = [Result]()
-    private var hits = [Hit]()
-    func getHitsFromApi(url: String, completion: @escaping ([Hit]) -> ()) {
-        var hits = [Hit]()
-            dataManager.get(url: url) { (data) in
-            do {
-                let result = try JSONDecoder().decode(Result.self, from: data)
-                hits = result.hits
-                completion(hits)
-            } catch {
-                print("get hits failed!")
-            }
-        }
-    }
+    let dataManager = DataManager()
+    var hits = [Hit]()
+    var sellectedCell = IndexPath()
+    private let numberOfItemsInRow = 3
+    private let paddingSpace = CGFloat(12)
+    private let screenWidth = UIScreen.main.bounds.width
+    private var itemsWidth = CGFloat()
+    var curentPage = 1
+    var nextPage = 1
     
-    func getResults(page: Int, url: String) {
-        var curantPage = page
-        dataManager.get(url: url + "&page=\(curantPage)") { (data) in
-            do {
-                let result = try JSONDecoder().decode(Result.self, from: data)
-                print("got result from page \(curantPage)")
-                print(result)
-                self.results.append(result)
-                print(self.results.count)
-                if curantPage < 15 {
-                    curantPage += 1
-                    self.getResults(page: curantPage, url: url)
-                }
-            } catch {
-                print("get result fail!")
-            }
-        }
-    }
-    
-    func getHitsInPage(page: Int, url: String, completion: @escaping ([Hit]) -> ()) {
-        var hits = [Hit]()
-            dataManager.get(url: url + "&page=\(page)") { (data) in
+    // get hits by page number
+    func getHitsInPage(url: String, completion: @escaping ([Hit]) -> ()) {
+            dataManager.get(url: url + "&page=\(curentPage)") { (data) in
                 do {
                     let result = try JSONDecoder().decode(Result.self, from: data)
-                    hits = result.hits
-                    completion(hits)
+                    self.hits += result.hits
+                    completion(self.hits)
                 } catch {
                     print("get hits failed!")
                 }
             }
+    }
+    
+    func sizeForSellectedItem(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
+        let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
+        let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+        return cell.sizeForSelectedCell(cellWidth: cellWidth)
+    }
+    
+    func getInsertOfSection() -> UIEdgeInsets {
+        let insertOfSection = UIEdgeInsets(top: 20, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
+        return insertOfSection
+    }
+    
+    func getItemsWidth() -> CGFloat {
+        let itemsWidth = screenWidth - paddingSpace
+        return itemsWidth
+    }
+    
+    func getSizeForItem() -> CGSize {
+        let itemsWidth = getItemsWidth()
+        let sizeForItem = CGSize(width: itemsWidth/CGFloat(numberOfItemsInRow),
+                             height: itemsWidth/CGFloat(numberOfItemsInRow))
+        return sizeForItem
+    }
+    
+    func getMinimumInteritemSpacingForSection() -> CGFloat {
+        let minimumInteritemSpacingForSection = paddingSpace/CGFloat(numberOfItemsInRow + 1)
+        return minimumInteritemSpacingForSection
+    }
+    
+    func getMinimumLineSpacingForSection() -> CGFloat {
+        let minimumLineSpacingForSection = paddingSpace/CGFloat(numberOfItemsInRow + 1)
+        return minimumLineSpacingForSection
     }
 }

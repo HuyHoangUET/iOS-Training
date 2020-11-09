@@ -21,7 +21,7 @@ class CollectionViewCell: UICollectionViewCell {
         imageView.image = nil
     }
     
-    func selectCell(cellWidth: CGFloat) -> CGSize {
+    func sizeForSelectedCell(cellWidth: CGFloat) -> CGSize {
         imageView.contentMode = .scaleAspectFit
         let imageWidth = imageView.image?.size.width ?? CGFloat(0)
         let imageHeight = imageView.image?.size.height ?? CGFloat(0)
@@ -29,7 +29,7 @@ class CollectionViewCell: UICollectionViewCell {
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
-    func deSelectCell() {
+    func sizeForDeselectedCell() {
         imageView.contentMode = .scaleAspectFill
     }
     

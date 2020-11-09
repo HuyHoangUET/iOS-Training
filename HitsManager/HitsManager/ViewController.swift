@@ -16,14 +16,6 @@ class ViewController: UIViewController {
 
     private let apiURL = "https://pixabay.com/api/?key=13112092-54e8286568142add194090167&q=girl"
     private let viewModel = ViewModel()
-    private var curentPage = 1
-    private var page = 1
-    private var hits = [Hit]()
-    private let dataManager = DataManager()
-    private let numberOfItemsInRow = 3
-    private let paddingSpace = CGFloat(12)
-    private let screenWidth = UIScreen.main.bounds.width
-    private var sellectedCell = IndexPath()
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
@@ -31,8 +23,7 @@ class ViewController: UIViewController {
         collectionView.prefetchDataSource = self
         
         // get data from api
-        viewModel.getHitsInPage(page: curentPage, url: apiURL, completion: {[weak self] hits in
-            self?.hits += hits
+        viewModel.getHitsInPage(url: apiURL, completion: {[weak self] hits in
             self?.collectionView.reloadData()
         })
     }
@@ -40,17 +31,17 @@ class ViewController: UIViewController {
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        hits.count
+        viewModel.hits.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
-        let hit = hits[indexPath.row]
-        dataManager.getImage(url: hit.imageURL, completion: { image in
+        let hit = viewModel.hits[indexPath.row]
+            viewModel.dataManager.getImage(url: hit.imageURL, completion: { image in
             cell.createCell(image: image)
         })
-        if indexPath.row >= hits.count - 1 {
-            page += 1
+        if indexPath.row >= viewModel.hits.count - 1 {
+            viewModel.nextPage += 1
         }
         return cell
     }
@@ -59,56 +50,52 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 // Set layout for item
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 20, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
+        return viewModel.getInsertOfSection()
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsWidth = screenWidth - paddingSpace
-        if sellectedCell == indexPath {
-            let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
-            let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-            return cell.selectCell(cellWidth: cellWidth)
+        if viewModel.sellectedCell == indexPath {
+            return viewModel.sizeForSellectedItem(indexPath: indexPath,
+                                  collectionView: collectionView)
         }
         
-        return CGSize(width: itemsWidth/CGFloat(numberOfItemsInRow),
-                      height: itemsWidth/CGFloat(numberOfItemsInRow))
+        return viewModel.getSizeForItem()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return paddingSpace/CGFloat(numberOfItemsInRow + 1)
+        return viewModel.getMinimumInteritemSpacingForSection()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return paddingSpace/CGFloat(numberOfItemsInRow + 1)
+        return viewModel.getMinimumLineSpacingForSection()
     }
 }
 
 // Custom sellected cell
 extension ViewController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        sellectedCell = indexPath
+        viewModel.sellectedCell = indexPath
         collectionView.performBatchUpdates(nil, completion: nil)
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        sellectedCell = IndexPath()
+        viewModel.sellectedCell = IndexPath()
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-        cell.deSelectCell()
+        cell.sizeForDeselectedCell()
     }
 }
 
 // load more
 extension ViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        if page > curentPage {
-            curentPage += 1
-            viewModel.getHitsInPage(page: curentPage, url: apiURL) { (hits) in
-                self.hits += hits
-                DispatchQueue.main.async {
-                    collectionView.reloadItems(at: indexPaths)
-                }
+        if viewModel.nextPage > viewModel.curentPage {
+            viewModel.curentPage += 1
+            viewModel.getHitsInPage(url: apiURL) { (hits) in
+                collectionView.reloadItems(at: indexPaths)
             }
         }
+        print(indexPaths)
+        print(viewModel.hits.count)
     }
 }
