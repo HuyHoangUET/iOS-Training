@@ -95,7 +95,5 @@ extension ViewController: UICollectionViewDataSourcePrefetching {
                 collectionView.reloadItems(at: indexPaths)
             }
         }
-        print(indexPaths)
-        print(viewModel.hits.count)
     }
 }
