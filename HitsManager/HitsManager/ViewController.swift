@@ -10,19 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
     // MARK: - outlet
-    @IBOutlet weak var hitCollectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mainView: UIView!
     
     private let viewModel = ViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-        hitCollectionView.delegate = self
-        hitCollectionView.dataSource = self
-        hitCollectionView.prefetchDataSource = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.prefetchDataSource = self
         
         // get data from api
         viewModel.getHitsInPage(completion: {[weak self] hits in
-            self?.hitCollectionView.reloadData()
+            self?.collectionView.reloadData()
         })
     }
 }
@@ -34,7 +34,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell
-        cell?.showActivityIndicatory()
+        cell?.showLoadingIndicator()
         let hit = viewModel.hits[indexPath.row]
             viewModel.dataManager.getImage(url: hit.imageURL, completion: { image in
                 DispatchQueue.main.async {
@@ -48,7 +48,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
 // Set layout for item
 extension ViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
         return viewModel.getInsertOfSection()
     }
     
@@ -63,11 +65,15 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         return viewModel.getSizeForItem()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return viewModel.getMinimumInteritemSpacingForSection()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return viewModel.getMinimumLineSpacingForSection()
     }
 }
@@ -94,11 +100,10 @@ extension ViewController {
 // load more
 extension ViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        
         if indexPaths.last?.row == viewModel.hits.count - 1 {
             viewModel.curentPage += 1
             viewModel.getHitsInPage() { (hits) in
-                collectionView.reloadData()
+                self.collectionView.reloadData()
             }
         }
     }

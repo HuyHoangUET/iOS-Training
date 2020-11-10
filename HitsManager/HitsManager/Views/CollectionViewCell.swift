@@ -34,7 +34,7 @@ class HitCollectionViewCell: UICollectionViewCell {
         imageView.image = image
     }
     
-    func showActivityIndicatory() {
+    func showLoadingIndicator() {
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.center = imageView.center
         loadingIndicator.style = .medium

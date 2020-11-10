@@ -68,7 +68,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="hitCollectionView" destination="bgj-Vy-Ghu" id="HFT-ji-CVg"/>
+                        <outlet property="collectionView" destination="bgj-Vy-Ghu" id="HFT-ji-CVg"/>
                         <outlet property="mainView" destination="8bC-Xf-vdC" id="yKv-bc-Xpk"/>
                     </connections>
                 </viewController>
