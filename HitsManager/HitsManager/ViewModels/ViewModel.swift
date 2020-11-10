@@ -17,7 +17,6 @@ class ViewModel {
     private let screenWidth = UIScreen.main.bounds.width
     private var itemsWidth = CGFloat()
     var curentPage = 1
-    var nextPage = 1
     
     // get hits by page number
     func getHitsInPage(completion: @escaping ([Hit]) -> ()) {
@@ -35,8 +34,6 @@ class ViewModel {
     func sizeForSellectedItem(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
         guard let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return CGSize(width: 0, height: 0)}
-        print(indexPath.row)
-        print(hits[indexPath.row])
         return cell.sizeForSelectedCell(cellWidth: cellWidth)
     }
     

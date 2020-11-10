@@ -10,19 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
     // MARK: - outlet
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var hitCollectionView: UICollectionView!
     @IBOutlet weak var mainView: UIView!
     
     private let viewModel = ViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.prefetchDataSource = self
+        hitCollectionView.delegate = self
+        hitCollectionView.dataSource = self
+        hitCollectionView.prefetchDataSource = self
         
         // get data from api
         viewModel.getHitsInPage(completion: {[weak self] hits in
-            self?.collectionView.reloadData()
+            self?.hitCollectionView.reloadData()
         })
     }
 }
@@ -86,7 +86,6 @@ extension ViewController {
 // load more
 extension ViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print("curentPage: \(viewModel.curentPage)")
         
         if indexPaths.last?.row == viewModel.hits.count - 1 {
             viewModel.curentPage += 1
