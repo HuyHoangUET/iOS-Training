@@ -12,6 +12,8 @@ class HitCollectionViewCell: UICollectionViewCell {
     // MARK: - outlet
     @IBOutlet weak var imageView: UIImageView!
     
+    let loadingIndicator = UIActivityIndicatorView()
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil    }
@@ -30,5 +32,14 @@ class HitCollectionViewCell: UICollectionViewCell {
     
     func configureCell(image: UIImage) {
         imageView.image = image
+    }
+    
+    func showActivityIndicatory() {
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.center = imageView.center
+        loadingIndicator.style = .medium
+        loadingIndicator.color = .white
+        imageView.addSubview(loadingIndicator)
+        loadingIndicator.startAnimating()
     }
 }

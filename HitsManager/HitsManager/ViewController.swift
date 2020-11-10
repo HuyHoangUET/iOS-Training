@@ -34,10 +34,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell
+        cell?.showActivityIndicatory()
         let hit = viewModel.hits[indexPath.row]
             viewModel.dataManager.getImage(url: hit.imageURL, completion: { image in
                 DispatchQueue.main.async {
                     cell?.configureCell(image: image)
+                    cell?.loadingIndicator.stopAnimating()
                 }
         })
         return cell ?? HitCollectionViewCell()
