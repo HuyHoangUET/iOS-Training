@@ -20,8 +20,8 @@ class ViewModel {
     var nextPage = 1
     
     // get hits by page number
-    func getHitsInPage(url: String, completion: @escaping ([Hit]) -> ()) {
-            dataManager.get(url: url + "&page=\(curentPage)") { (data) in
+    func getHitsInPage(completion: @escaping ([Hit]) -> ()) {
+            dataManager.get(url: apiURL + "&page=\(curentPage)") { (data) in
                 do {
                     let result = try JSONDecoder().decode(Result.self, from: data)
                     self.hits += result.hits
@@ -34,7 +34,9 @@ class ViewModel {
     
     func sizeForSellectedItem(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
-        let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+        guard let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return CGSize(width: 0, height: 0)}
+        print(indexPath.row)
+        print(hits[indexPath.row])
         return cell.sizeForSelectedCell(cellWidth: cellWidth)
     }
     

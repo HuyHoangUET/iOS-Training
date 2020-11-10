@@ -11,10 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     // MARK: - outlet
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet var mainView: UIView!
+    @IBOutlet weak var mainView: UIView!
     
-
-    private let apiURL = "https://pixabay.com/api/?key=13112092-54e8286568142add194090167&q=girl"
     private let viewModel = ViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +21,7 @@ class ViewController: UIViewController {
         collectionView.prefetchDataSource = self
         
         // get data from api
-        viewModel.getHitsInPage(url: apiURL, completion: {[weak self] hits in
+        viewModel.getHitsInPage(completion: {[weak self] hits in
             self?.collectionView.reloadData()
         })
     }
@@ -35,15 +33,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell
         let hit = viewModel.hits[indexPath.row]
             viewModel.dataManager.getImage(url: hit.imageURL, completion: { image in
-            cell.createCell(image: image)
+                DispatchQueue.main.async {
+                    cell?.configureCell(image: image)
+                }
         })
-        if indexPath.row >= viewModel.hits.count - 1 {
-            viewModel.nextPage += 1
-        }
-        return cell
+        return cell ?? HitCollectionViewCell()
     }
 }
 
@@ -81,18 +78,20 @@ extension ViewController {
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         viewModel.sellectedCell = IndexPath()
-        let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-        cell.sizeForDeselectedCell()
+        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
+        cell?.sizeForDeselectedCell()
     }
 }
 
 // load more
 extension ViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        if viewModel.nextPage > viewModel.curentPage {
+        print("curentPage: \(viewModel.curentPage)")
+        
+        if indexPaths.last?.row == viewModel.hits.count - 1 {
             viewModel.curentPage += 1
-            viewModel.getHitsInPage(url: apiURL) { (hits) in
-                collectionView.reloadItems(at: indexPaths)
+            viewModel.getHitsInPage() { (hits) in
+                collectionView.reloadData()
             }
         }
     }

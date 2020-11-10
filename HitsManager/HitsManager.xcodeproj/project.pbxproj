@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2504DB79255399F200F08184 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2504DB78255399F200F08184 /* Item.swift */; };
 		25230415254FFA1E00F79252 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25230414254FFA1E00F79252 /* AppDelegate.swift */; };
 		25230417254FFA1E00F79252 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25230416254FFA1E00F79252 /* SceneDelegate.swift */; };
 		25230419254FFA1E00F79252 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25230418254FFA1E00F79252 /* ViewController.swift */; };
@@ -23,7 +22,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2504DB78255399F200F08184 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		25230411254FFA1E00F79252 /* HitsManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HitsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25230414254FFA1E00F79252 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25230416254FFA1E00F79252 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,10 +73,10 @@
 		25230413254FFA1E00F79252 /* HitsManager */ = {
 			isa = PBXGroup;
 			children = (
-				258498B92554E9A000BE6C80 /* ViewModel */,
 				2523043525500FD900F79252 /* DataManager */,
-				2523042E254FFE9600F79252 /* Objects */,
-				25230429254FFD8E00F79252 /* View */,
+				2523042E254FFE9600F79252 /* Models */,
+				25230429254FFD8E00F79252 /* Views */,
+				258498B92554E9A000BE6C80 /* ViewModels */,
 				25230414254FFA1E00F79252 /* AppDelegate.swift */,
 				25230416254FFA1E00F79252 /* SceneDelegate.swift */,
 				25230418254FFA1E00F79252 /* ViewController.swift */,
@@ -90,22 +88,21 @@
 			path = HitsManager;
 			sourceTree = "<group>";
 		};
-		25230429254FFD8E00F79252 /* View */ = {
+		25230429254FFD8E00F79252 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				2523042B254FFDBF00F79252 /* CollectionViewCell.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		2523042E254FFE9600F79252 /* Objects */ = {
+		2523042E254FFE9600F79252 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				2523042F254FFEB800F79252 /* Result.swift */,
 				25230432254FFF0700F79252 /* Hit.swift */,
-				2504DB78255399F200F08184 /* Item.swift */,
 			);
-			path = Objects;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		2523043525500FD900F79252 /* DataManager */ = {
@@ -116,12 +113,12 @@
 			path = DataManager;
 			sourceTree = "<group>";
 		};
-		258498B92554E9A000BE6C80 /* ViewModel */ = {
+		258498B92554E9A000BE6C80 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				258498BA2554E9B500BE6C80 /* ViewModel.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		95F98967A03F8E03E4EDA1CC /* Frameworks */ = {
@@ -260,7 +257,6 @@
 				25230430254FFEB800F79252 /* Result.swift in Sources */,
 				25230415254FFA1E00F79252 /* AppDelegate.swift in Sources */,
 				252304372550100700F79252 /* DataManager.swift in Sources */,
-				2504DB79255399F200F08184 /* Item.swift in Sources */,
 				2523042C254FFDBF00F79252 /* CollectionViewCell.swift in Sources */,
 				25230417254FFA1E00F79252 /* SceneDelegate.swift in Sources */,
 				25230433254FFF0700F79252 /* Hit.swift in Sources */,

@@ -9,13 +9,19 @@ import Foundation
 import Alamofire
 import AlamofireImage
 
+let apiURL = "https://pixabay.com/api/?key=13112092-54e8286568142add194090167&q=girl"
+
 class DataManager {
     func get(url: String, completion: @escaping (Data) -> Void){
         guard url != "" else { return }
         AF.request(url).response {
             response in
-            guard let data = response.data else { return }
-            completion(data)
+            if response.data != nil {
+                let data = response.data
+                completion(data!)
+            } else {
+                print(response.error as Any)
+            }
         }
     }
     func getImage(url: String, completion: @escaping (UIImage) ->()) {
@@ -23,9 +29,13 @@ class DataManager {
         guard url != "" else { return }
         AF.request(url).responseImage {
             response in
-            guard let data = response.data else { return }
-            image = UIImage(data: data, scale: 1) ?? UIImage()
-            completion(image)
+            if response.data != nil {
+                let data = response.data
+                image = UIImage(data: data!, scale: 1) ?? UIImage()
+                completion(image)
+            } else {
+                print(response.error as Any)
+            }
         }
     }
 }

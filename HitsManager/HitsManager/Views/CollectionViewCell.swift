@@ -8,18 +8,13 @@
 import Foundation
 import UIKit
 
-var imageCallBack: ((UIImage) -> ())?
-
-class CollectionViewCell: UICollectionViewCell {
+class HitCollectionViewCell: UICollectionViewCell {
     // MARK: - outlet
     @IBOutlet weak var imageView: UIImageView!
     
-    var hits = [Hit]()
-    let dataManager = DataManager()
-    
     override func prepareForReuse() {
-        imageView.image = nil
-    }
+        super.prepareForReuse()
+        imageView.image = nil    }
     
     func sizeForSelectedCell(cellWidth: CGFloat) -> CGSize {
         imageView.contentMode = .scaleAspectFit
@@ -33,7 +28,7 @@ class CollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
     }
     
-    func createCell(image: UIImage) {
+    func configureCell(image: UIImage) {
         imageView.image = image
     }
 }
