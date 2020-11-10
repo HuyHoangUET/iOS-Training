@@ -75,7 +75,13 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 // Custom sellected cell
 extension ViewController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.sellectedCell = indexPath
+        if viewModel.sellectedCell != indexPath {
+            viewModel.sellectedCell = indexPath
+        } else {
+            viewModel.sellectedCell = IndexPath()
+            let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
+            cell?.sizeForDeselectedCell()
+        }
         collectionView.performBatchUpdates(nil, completion: nil)
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
