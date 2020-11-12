@@ -18,6 +18,7 @@
 		25230433254FFF0700F79252 /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25230432254FFF0700F79252 /* Hit.swift */; };
 		252304372550100700F79252 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252304362550100700F79252 /* DataManager.swift */; };
 		258498BB2554E9B500BE6C80 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258498BA2554E9B500BE6C80 /* ViewModel.swift */; };
+		25DEDA6B255A908600562F1A /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DEDA6A255A908600562F1A /* Database.swift */; };
 		B8BB88285F1B51893A984FD6 /* Pods_HitsManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E3F6A521AB45F521B1C031 /* Pods_HitsManager.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		25230432254FFF0700F79252 /* Hit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hit.swift; sourceTree = "<group>"; };
 		252304362550100700F79252 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		258498BA2554E9B500BE6C80 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		25DEDA6A255A908600562F1A /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		27B1D1CD0C8084CFF016163B /* Pods-HitsManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HitsManager.release.xcconfig"; path = "Target Support Files/Pods-HitsManager/Pods-HitsManager.release.xcconfig"; sourceTree = "<group>"; };
 		44E3F6A521AB45F521B1C031 /* Pods_HitsManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HitsManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55002808AA2BB91D6B4F9432 /* Pods-HitsManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HitsManager.debug.xcconfig"; path = "Target Support Files/Pods-HitsManager/Pods-HitsManager.debug.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 		25230413254FFA1E00F79252 /* HitsManager */ = {
 			isa = PBXGroup;
 			children = (
+				25DEDA69255A906200562F1A /* Database */,
 				2523043525500FD900F79252 /* DataManager */,
 				2523042E254FFE9600F79252 /* Models */,
 				25230429254FFD8E00F79252 /* Views */,
@@ -119,6 +122,14 @@
 				258498BA2554E9B500BE6C80 /* ViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		25DEDA69255A906200562F1A /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				25DEDA6A255A908600562F1A /* Database.swift */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 		95F98967A03F8E03E4EDA1CC /* Frameworks */ = {
@@ -258,6 +269,7 @@
 				25230415254FFA1E00F79252 /* AppDelegate.swift in Sources */,
 				252304372550100700F79252 /* DataManager.swift in Sources */,
 				2523042C254FFDBF00F79252 /* CollectionViewCell.swift in Sources */,
+				25DEDA6B255A908600562F1A /* Database.swift in Sources */,
 				25230417254FFA1E00F79252 /* SceneDelegate.swift in Sources */,
 				25230433254FFF0700F79252 /* Hit.swift in Sources */,
 			);

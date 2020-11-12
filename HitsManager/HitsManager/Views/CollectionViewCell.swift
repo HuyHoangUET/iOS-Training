@@ -16,7 +16,8 @@ class HitCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imageView.image = nil    }
+        imageView.image = nil
+    }
     
     func sizeForSelectedCell(cellWidth: CGFloat) -> CGSize {
         imageView.contentMode = .scaleAspectFit
@@ -41,5 +42,14 @@ class HitCollectionViewCell: UICollectionViewCell {
         loadingIndicator.color = .white
         imageView.addSubview(loadingIndicator)
         loadingIndicator.startAnimating()
+    }
+    
+    // MARK: - action
+    @IBAction func heartButton(_ sender: UIButton) {
+        var image = UIImage(systemName: "heart.fill")
+        if sender.currentImage == image {
+            image = UIImage(systemName: "heart")
+        }
+        sender.setImage(image, for: .normal)
     }
 }

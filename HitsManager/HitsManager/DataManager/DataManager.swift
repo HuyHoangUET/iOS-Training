@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import AlamofireImage
+import SQLite3
 
 let apiURL = "https://pixabay.com/api/?key=13112092-54e8286568142add194090167&q=girl"
 

@@ -18,17 +18,23 @@ class ViewModel {
     private var itemsWidth = CGFloat()
     var curentPage = 1
     
+    func showCollectionView(collectionView: UICollectionView) {
+        getHitsByPage() { (hits) in
+            collectionView.reloadData()
+        }
+    }
+    
     // get hits by page number
-    func getHitsInPage(completion: @escaping ([Hit]) -> ()) {
-            dataManager.get(url: apiURL + "&page=\(curentPage)") { (data) in
-                do {
-                    let result = try JSONDecoder().decode(Result.self, from: data)
-                    self.hits += result.hits
-                    completion(self.hits)
-                } catch {
-                    print("get hits failed!")
-                }
+    func getHitsByPage(completion: @escaping ([Hit]) -> ()) {
+        dataManager.get(url: apiURL + "&page=\(curentPage)") {[weak self] (data) in
+            do {
+                let result = try JSONDecoder().decode(Result.self, from: data)
+                self?.hits += result.hits
+                completion(self?.hits ?? [])
+            } catch {
+                print("get hits failed!")
             }
+        }
     }
     
     func sizeForSellectedItem(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
