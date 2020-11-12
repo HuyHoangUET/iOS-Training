@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -40,31 +39,26 @@
                                                     <gestureRecognizers/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecP-bj-QjZ">
-                                                    <rect key="frame" x="99.5" y="99.5" width="25.5" height="25.5"/>
+                                                    <rect key="frame" x="95" y="91" width="30" height="34"/>
                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                     <state key="normal">
-                                                        <imageReference key="image" image="heart" catalog="system" symbolScale="large"/>
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="heartButton:" destination="qDF-To-t5V" eventType="touchUpInside" id="1c2-Uq-bUd"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <gestureRecognizers/>
                                             <constraints>
-                                                <constraint firstItem="ecP-bj-QjZ" firstAttribute="height" secondItem="ZY3-os-p1b" secondAttribute="height" multiplier="1/5" id="0gn-Pg-4zS"/>
                                                 <constraint firstItem="rUb-jR-r6G" firstAttribute="top" secondItem="ZY3-os-p1b" secondAttribute="top" id="EJf-Rp-MMa"/>
                                                 <constraint firstAttribute="bottom" secondItem="rUb-jR-r6G" secondAttribute="bottom" id="b9f-du-1Hl"/>
                                                 <constraint firstItem="rUb-jR-r6G" firstAttribute="leading" secondItem="ZY3-os-p1b" secondAttribute="leading" id="e5c-af-5LH"/>
                                                 <constraint firstAttribute="trailing" secondItem="rUb-jR-r6G" secondAttribute="trailing" id="myH-yV-8oj"/>
                                                 <constraint firstAttribute="bottom" secondItem="ecP-bj-QjZ" secondAttribute="bottom" constant="3" id="oIv-nF-zK2"/>
                                                 <constraint firstAttribute="trailing" secondItem="ecP-bj-QjZ" secondAttribute="trailing" constant="3" id="qqV-2J-uRS"/>
-                                                <constraint firstItem="ecP-bj-QjZ" firstAttribute="width" secondItem="ZY3-os-p1b" secondAttribute="width" multiplier="1/5" id="t5u-lB-gW3"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <gestureRecognizers/>
                                         <connections>
+                                            <outlet property="heartButton" destination="ecP-bj-QjZ" id="Gvw-O6-6pg"/>
                                             <outlet property="imageView" destination="rUb-jR-r6G" id="VCT-5j-zDm"/>
                                         </connections>
                                     </collectionViewCell>
@@ -94,7 +88,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="heart" catalog="system" width="128" height="109"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

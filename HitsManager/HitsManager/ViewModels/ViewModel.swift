@@ -17,10 +17,18 @@ class ViewModel {
     private let screenWidth = UIScreen.main.bounds.width
     private var itemsWidth = CGFloat()
     var curentPage = 1
+    var indexPath = IndexPath()
     
     func showCollectionView(collectionView: UICollectionView) {
         getHitsByPage() { (hits) in
             collectionView.reloadData()
+        }
+    }
+    
+    func setImageCell(hit: Hit, cell: HitCollectionViewCell) {
+        dataManager.getImage(url: hit.imageURL) { (image) in
+            cell.setImageForCell(image: image, id: hit.id)
+            cell.loadingIndicator.stopAnimating()
         }
     }
     
@@ -37,7 +45,7 @@ class ViewModel {
         }
     }
     
-    func sizeForSellectedItem(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
+    func sizeForSellectedItem(collectionView: UICollectionView) -> CGSize {
         let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
         let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
         return cell?.sizeForSelectedCell(cellWidth: cellWidth) ?? CGSize()
