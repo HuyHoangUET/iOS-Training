@@ -19,6 +19,7 @@ class ViewModel {
     var sellectedCell = IndexPath()
     var curentPage = 1
     
+    // Handle view
     func showCollectionView(collectionView: UICollectionView) {
         getHitsByPage() { (hits) in
             collectionView.reloadData()
@@ -40,7 +41,7 @@ class ViewModel {
         }
     }
     
-    // get hits by page number
+    // Get hits from api
     func getHitsByPage(completion: @escaping ([Hit]) -> ()) {
         dataManager.get(url: apiURL + "&page=\(curentPage)") {[weak self] (data) in
             do {
@@ -53,6 +54,16 @@ class ViewModel {
         }
     }
     
+    func loadMorePage(collectionView: UICollectionView, indexPaths: [IndexPath]) {
+        if indexPaths.last?.row == hits.count - 1 {
+            curentPage += 1
+            getHitsByPage() { (hits) in
+                collectionView.reloadItems(at: indexPaths)
+            }
+        }
+    }
+    
+    // Set size and layout for collection view
     func getSizeForDidSellectItem(collectionView: UICollectionView, indexPath: IndexPath) -> CGSize {
         let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
         let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
@@ -86,6 +97,7 @@ class ViewModel {
         return minimumLineSpacingForSection
     }
     
+    // Handle action when sellect or dissellect an image
     func didSellectCell(indexPath: IndexPath, collectionView: UICollectionView) {
         let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
         if sellectedCell != indexPath {
@@ -102,6 +114,7 @@ class ViewModel {
         cell?.sizeForDeselectedCell()
     }
     
+    // Check like button of image
     func handleLikeButton(setDidLikeImagesId: Set<Int>, cell: HitCollectionViewCell, indexPath: IndexPath) {
         if setDidLikeImagesId.isSuperset(of: [hits[indexPath.row].id]) {
             cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)

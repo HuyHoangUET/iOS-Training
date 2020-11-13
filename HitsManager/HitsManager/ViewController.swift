@@ -42,7 +42,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
 }
 
-// Set layout for item
+// Custom cell
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -71,13 +71,12 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return viewModel.getMinimumLineSpacingForSection()
     }
-}
-
-// Custom did sellect cell
-extension ViewController {
+    
+    // Sellect cell
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.didSellectCell(indexPath: indexPath, collectionView: collectionView)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         viewModel.sellectedCell = IndexPath()
         viewModel.didDeSellectCell(collectionView: collectionView, indexPath: indexPath)
@@ -87,12 +86,7 @@ extension ViewController {
 // Load more page
 extension ViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        if indexPaths.last?.row == viewModel.hits.count - 1 {
-            viewModel.curentPage += 1
-            viewModel.getHitsByPage() { (hits) in
-                self.collectionView.reloadData()
-            }
-        }
+        viewModel.loadMorePage(collectionView: collectionView, indexPaths: indexPaths)
     }
 }
 
