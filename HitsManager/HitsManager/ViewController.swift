@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var mainView: UIView!
     
     private let viewModel = ViewModel()
-    var likedImagesId = Set<Int>()
+    var setDidLikeImagesId = Set<Int>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     }
 }
 
+// Set cell for collectionView
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.hits.count
@@ -33,16 +34,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell
+        cell?.delegate = self
         let hit = viewModel.hits[indexPath.row]
-        viewModel.indexPath = indexPath
-        cell?.showLoadingIndicator()
-        viewModel.setImageCell(hit: hit, cell: cell ?? HitCollectionViewCell())
-        cell?.heartButton.addTarget(self, action: #selector(tapHeartButton(sender:)), for: .touchUpInside)
-        cell?.heartButton.setImage(UIImage(systemName: "heart"), for: .normal)
-        if likedImagesId.isSuperset(of: [hit.id]) {
-            cell?.heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
-//        cell?.configureCell(indexPath: indexPath, hit: hit)
+        viewModel.showHitCollectionViewCell(hit: hit, cell: cell ?? HitCollectionViewCell())
+        viewModel.handleLikeButton(setDidLikeImagesId: setDidLikeImagesId, cell: cell ?? HitCollectionViewCell(), indexPath: indexPath)
         return cell ?? HitCollectionViewCell()
     }
 }
@@ -59,8 +54,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         if viewModel.sellectedCell == indexPath {
-            viewModel.indexPath = indexPath
-            return viewModel.sizeForSellectedItem(collectionView: collectionView)
+            return viewModel.getSizeForDidSellectItem(collectionView: collectionView, indexPath: indexPath)
         }
         
         return viewModel.getSizeForItem()
@@ -79,20 +73,18 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// Custom sellected cell
+// Custom did sellect cell
 extension ViewController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
-        cell?.didSellectCell(indexPath: indexPath, collectionView: collectionView)
+        viewModel.didSellectCell(indexPath: indexPath, collectionView: collectionView)
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         viewModel.sellectedCell = IndexPath()
-        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
-        cell?.sizeForDeselectedCell()
+        viewModel.didDeSellectCell(collectionView: collectionView, indexPath: indexPath)
     }
 }
 
-// load more
+// Load more page
 extension ViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         if indexPaths.last?.row == viewModel.hits.count - 1 {
@@ -104,17 +96,13 @@ extension ViewController: UICollectionViewDataSourcePrefetching {
     }
 }
 
-extension ViewController {
-    @objc func tapHeartButton(sender: UIButton){
-        let heartImage = UIImage(systemName: "heart.fill")
-        let cell = sender.superview?.superview as! HitCollectionViewCell
-        if sender.currentImage == heartImage {
-            sender.setImage(UIImage(systemName: "heart"), for: .normal)
-            likedImagesId.remove(cell.idImage)
-            
-        } else {
-            sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            likedImagesId.insert(cell.idImage)
-        }
+// Handle like image
+extension ViewController: HitCollectionViewDelegate {
+    func didLikeImage(id: Int) {
+        setDidLikeImagesId.insert(id)
+    }
+    
+    func didDisLikeImage(id: Int) {
+        setDidLikeImagesId.remove(id)
     }
 }

@@ -9,15 +9,15 @@ import Foundation
 import UIKit
 
 class ViewModel {
-    let dataManager = DataManager()
-    var hits = [Hit]()
-    var sellectedCell = IndexPath()
+    weak var delegate: HitCollectionViewDelegate?
+    private let dataManager = DataManager()
     private let numberOfItemsInRow = 3
     private let paddingSpace = CGFloat(12)
     private let screenWidth = UIScreen.main.bounds.width
     private var itemsWidth = CGFloat()
+    var hits = [Hit]()
+    var sellectedCell = IndexPath()
     var curentPage = 1
-    var indexPath = IndexPath()
     
     func showCollectionView(collectionView: UICollectionView) {
         getHitsByPage() { (hits) in
@@ -25,7 +25,15 @@ class ViewModel {
         }
     }
     
-    func setImageCell(hit: Hit, cell: HitCollectionViewCell) {
+    func showHitCollectionViewCell(hit: Hit, cell: HitCollectionViewCell) {
+        cell.showLoadingIndicator()
+        dataManager.getImage(url: hit.imageURL) { (image) in
+            cell.setImageForCell(image: image, id: hit.id)
+            cell.loadingIndicator.stopAnimating()
+        }
+    }
+    
+    func setImageCell(hit: Hit, cell: HitCollectionViewCell){
         dataManager.getImage(url: hit.imageURL) { (image) in
             cell.setImageForCell(image: image, id: hit.id)
             cell.loadingIndicator.stopAnimating()
@@ -45,7 +53,7 @@ class ViewModel {
         }
     }
     
-    func sizeForSellectedItem(collectionView: UICollectionView) -> CGSize {
+    func getSizeForDidSellectItem(collectionView: UICollectionView, indexPath: IndexPath) -> CGSize {
         let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
         let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
         return cell?.sizeForSelectedCell(cellWidth: cellWidth) ?? CGSize()
@@ -76,5 +84,29 @@ class ViewModel {
     func getMinimumLineSpacingForSection() -> CGFloat {
         let minimumLineSpacingForSection = paddingSpace/CGFloat(numberOfItemsInRow + 1)
         return minimumLineSpacingForSection
+    }
+    
+    func didSellectCell(indexPath: IndexPath, collectionView: UICollectionView) {
+        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
+        if sellectedCell != indexPath {
+            sellectedCell = indexPath
+        } else {
+            sellectedCell = IndexPath()
+            cell?.sizeForDeselectedCell()
+        }
+        collectionView.performBatchUpdates(nil, completion: nil)
+    }
+    
+    func didDeSellectCell(collectionView: UICollectionView, indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
+        cell?.sizeForDeselectedCell()
+    }
+    
+    func handleLikeButton(setDidLikeImagesId: Set<Int>, cell: HitCollectionViewCell, indexPath: IndexPath) {
+        if setDidLikeImagesId.isSuperset(of: [hits[indexPath.row].id]) {
+            cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
     }
 }

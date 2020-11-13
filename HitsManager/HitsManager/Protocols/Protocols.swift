@@ -9,5 +9,6 @@ import Foundation
 import UIKit
 
 protocol HitCollectionViewDelegate: class {
-    func didTabHeartButton(cell: HitCollectionViewCell, button: UIButton, id: Int)
+    func didLikeImage(id: Int)
+    func didDisLikeImage(id: Int)
 }
