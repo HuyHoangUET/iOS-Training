@@ -111,19 +111,16 @@ extension ViewController: HitCollectionViewDelegate {
 // Display collectionView cell
 extension ViewController {
     func initHitCollectionViewCell(indexPath: IndexPath) -> HitCollectionViewCell {
-        guard indexPath.row < viewModel.hits.count else {
-            return HitCollectionViewCell()
-        }
-        let hit = viewModel.hits[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell
-        cell?.delegate = self
-        cell?.showLoadingIndicator()
+        guard let hit = viewModel.hits[safeIndex: indexPath.row] else { return HitCollectionViewCell()}
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell else { return HitCollectionViewCell()}
+        cell.delegate = self
+        cell.showLoadingIndicator()
         viewModel.dataManager.getImage(url: hit.imageURL) { (image) in
-            cell?.setImageForCell(image: image, id: hit.id)
-            cell?.loadingIndicator.stopAnimating()
-            self.handleLikeButton(cell: cell ?? HitCollectionViewCell(), indexPath: indexPath)
+            cell.setImageForCell(image: image, id: hit.id)
+            cell.loadingIndicator.stopAnimating()
+            self.handleLikeButton(cell: cell , indexPath: indexPath)
         }
-        return cell ?? HitCollectionViewCell()
+        return cell 
     }
     
     func getSizeForDidSellectItem(indexPath: IndexPath) -> CGSize {
