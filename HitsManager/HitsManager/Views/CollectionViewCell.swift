@@ -15,7 +15,6 @@ class HitCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: HitCollectionViewDelegate?
     let loadingIndicator = UIActivityIndicatorView()
-    let dataManager = DataManager()
     var idImage = 0
     
     override func prepareForReuse() {

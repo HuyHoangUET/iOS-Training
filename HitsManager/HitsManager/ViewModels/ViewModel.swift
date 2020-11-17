@@ -18,9 +18,9 @@ class ViewModel {
     var hits: [Hit] = []
     var sellectedCell = IndexPath()
     var curentPage = 1
-    var setDidLikeImagesId = Set<Int>()
+    var setDidLikeImagesId: Set<Int> = []
     
-    // Get hits from api
+    // Get data from api
     func getHitsByPage(completion: @escaping ([Hit]) -> ()) {
         dataManager.get(url: apiURL + "&page=\(curentPage)") {[weak self] (data) in
             do {
@@ -33,7 +33,7 @@ class ViewModel {
         }
     }
     
-    func loadMorePage(collectionView: UICollectionView, indexPaths: [IndexPath]) {
+    func getHitsInNextPage(collectionView: UICollectionView, indexPaths: [IndexPath]) {
         if indexPaths.last?.row == hits.count - 1 {
             curentPage += 1
             getHitsByPage() { (hits) in
@@ -42,7 +42,7 @@ class ViewModel {
         }
     }
     
-    // Set size and layout for collection view
+    // Size and layout for collection view
     func getSizeForDidSellectItem(collectionView: UICollectionView, indexPath: IndexPath) -> CGSize {
         let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
         let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell

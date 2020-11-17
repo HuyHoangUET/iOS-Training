@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     }
 }
 
-// Set cell for collectionView
+// Create cell
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.hits.count
@@ -83,10 +83,10 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// Load more page
+// Load next page
 extension ViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        viewModel.loadMorePage(collectionView: collectionView, indexPaths: indexPaths)
+        viewModel.getHitsInNextPage(collectionView: collectionView, indexPaths: indexPaths)
     }
 }
 
@@ -109,7 +109,7 @@ extension ViewController: HitCollectionViewDelegate {
     }
 }
 
-// handle collectionView cell
+// Display collectionView cell
 extension ViewController {
     func showHitCollectionViewCell(hit: Hit, cell: HitCollectionViewCell, indexPath: IndexPath) {
         cell.showLoadingIndicator()
