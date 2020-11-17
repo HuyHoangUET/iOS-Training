@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var mainView: UIView!
     
     private let viewModel = ViewModel()
-    var setDidLikeImagesId = Set<Int>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +21,9 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
         
-        viewModel.showCollectionView(collectionView: collectionView)
+        viewModel.getHitsByPage() { (hits) in
+            self.collectionView.reloadData()
+        }
     }
 }
 
@@ -36,8 +37,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell
         cell?.delegate = self
         let hit = viewModel.hits[indexPath.row]
-        viewModel.showHitCollectionViewCell(hit: hit, cell: cell ?? HitCollectionViewCell())
-        viewModel.handleLikeButton(setDidLikeImagesId: setDidLikeImagesId, cell: cell ?? HitCollectionViewCell(), indexPath: indexPath)
+        showHitCollectionViewCell(hit: hit, cell: cell ?? HitCollectionViewCell(), indexPath: indexPath)
         return cell ?? HitCollectionViewCell()
     }
 }
@@ -74,12 +74,12 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     
     // Sellect cell
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.didSellectCell(indexPath: indexPath, collectionView: collectionView)
+        didSellectCell(indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         viewModel.sellectedCell = IndexPath()
-        viewModel.didDeSellectCell(collectionView: collectionView, indexPath: indexPath)
+        didDeSellectCell(indexPath: indexPath)
     }
 }
 
@@ -93,10 +93,46 @@ extension ViewController: UICollectionViewDataSourcePrefetching {
 // Handle like image
 extension ViewController: HitCollectionViewDelegate {
     func didLikeImage(id: Int) {
-        setDidLikeImagesId.insert(id)
+        viewModel.setDidLikeImagesId.insert(id)
     }
     
     func didDisLikeImage(id: Int) {
-        setDidLikeImagesId.remove(id)
+        viewModel.setDidLikeImagesId.remove(id)
+    }
+    
+    func handleLikeButton(cell: HitCollectionViewCell, indexPath: IndexPath) {
+        if viewModel.setDidLikeImagesId.isSuperset(of: [viewModel.hits[indexPath.row].id]) {
+            cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+    }
+}
+
+// handle collectionView cell
+extension ViewController {
+    func showHitCollectionViewCell(hit: Hit, cell: HitCollectionViewCell, indexPath: IndexPath) {
+        cell.showLoadingIndicator()
+        viewModel.dataManager.getImage(url: hit.imageURL) { (image) in
+            cell.setImageForCell(image: image, id: hit.id)
+            cell.loadingIndicator.stopAnimating()
+            self.handleLikeButton(cell: cell, indexPath: indexPath)
+        }
+    }
+    
+    func didSellectCell(indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
+        if viewModel.sellectedCell != indexPath {
+            viewModel.sellectedCell = indexPath
+        } else {
+            viewModel.sellectedCell = IndexPath()
+            cell?.sizeForDeselectedCell()
+        }
+        collectionView.performBatchUpdates(nil, completion: nil)
+    }
+    
+    func didDeSellectCell(indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
+        cell?.sizeForDeselectedCell()
     }
 }
