@@ -100,7 +100,8 @@ extension ViewController: HitCollectionViewDelegate {
     }
     
     func handleLikeButton(cell: HitCollectionViewCell, indexPath: IndexPath) {
-        if viewModel.setDidLikeImagesId.isSuperset(of: [viewModel.hits[indexPath.row].id]) {
+        guard let hitId = viewModel.hits[safeIndex: indexPath.row]?.id else { return }
+        if viewModel.setDidLikeImagesId.isSuperset(of: [hitId]) {
             cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         } else {
             cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
@@ -120,7 +121,7 @@ extension ViewController {
             cell.loadingIndicator.stopAnimating()
             self.handleLikeButton(cell: cell , indexPath: indexPath)
         }
-        return cell 
+        return cell
     }
     
     func getSizeForDidSellectItem(indexPath: IndexPath) -> CGSize {
