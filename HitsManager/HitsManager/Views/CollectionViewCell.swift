@@ -20,6 +20,7 @@ class HitCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
+        likeButton.setImage(nil, for: .normal)
     }
     
     func sizeForSellectedCell(cellWidth: CGFloat) -> CGSize {
@@ -51,13 +52,13 @@ class HitCollectionViewCell: UICollectionViewCell {
     // MARK: - action
     @IBAction func likeButton(_ sender: UIButton) {
         let heartImage = UIImage(systemName: "heart.fill")
-        let cell = sender.superview?.superview as? HitCollectionViewCell
+        guard let cell = sender.superview?.superview as? HitCollectionViewCell else { return }
         if sender.currentImage == heartImage {
             sender.setImage(UIImage(systemName: "heart"), for: .normal)
-            delegate?.didDisLikeImage(id: cell?.idImage ?? 0)
+            delegate?.didDisLikeImage(id: cell.idImage)
         } else {
             sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            delegate?.didLikeImage(id: cell?.idImage ?? 0)
+            delegate?.didLikeImage(id: cell.idImage)
         }
     }
 }

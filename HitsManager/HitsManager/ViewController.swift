@@ -128,25 +128,25 @@ extension ViewController {
     
     func getSizeForDidSellectItem(indexPath: IndexPath) -> CGSize {
         let cellWidth = viewModel.getCellWidth()
-        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
-        return cell?.sizeForSellectedCell(cellWidth: cellWidth) ?? CGSize()
+        guard let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return CGSize()}
+        return cell.sizeForSellectedCell(cellWidth: cellWidth)
     }
     
     func didSellectCell(indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
-        guard cell?.imageView.image != nil else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return }
+        guard cell.imageView.image != nil else { return }
         if viewModel.sellectedCell != indexPath {
             viewModel.sellectedCell = indexPath
         } else {
             viewModel.sellectedCell = IndexPath()
-            cell?.sizeForDesellectedCell()
+            cell.sizeForDesellectedCell()
         }
         collectionView.performBatchUpdates(nil, completion: nil)
     }
     
     func didDeSellectCell(indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
-        cell?.sizeForDesellectedCell()
+        guard let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return }
+        cell.sizeForDesellectedCell()
     }
 }
 
