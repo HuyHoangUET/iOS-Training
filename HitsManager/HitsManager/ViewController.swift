@@ -44,7 +44,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return viewModel.getInsertOfSection()
+        return viewModel.getInsetOfSection()
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -129,7 +129,7 @@ extension ViewController {
     func getSizeForDidSellectItem(indexPath: IndexPath) -> CGSize {
         let cellWidth = viewModel.getCellWidth()
         let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
-        return cell?.sizeForSelectedCell(cellWidth: cellWidth) ?? CGSize()
+        return cell?.sizeForSellectedCell(cellWidth: cellWidth) ?? CGSize()
     }
     
     func didSellectCell(indexPath: IndexPath) {
@@ -139,14 +139,14 @@ extension ViewController {
             viewModel.sellectedCell = indexPath
         } else {
             viewModel.sellectedCell = IndexPath()
-            cell?.sizeForDeselectedCell()
+            cell?.sizeForDesellectedCell()
         }
         collectionView.performBatchUpdates(nil, completion: nil)
     }
     
     func didDeSellectCell(indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
-        cell?.sizeForDeselectedCell()
+        cell?.sizeForDesellectedCell()
     }
 }
 
@@ -156,7 +156,6 @@ extension Array {
         guard index >= 0, index < endIndex else {
             return nil
         }
-
         return self[index]
     }
 }

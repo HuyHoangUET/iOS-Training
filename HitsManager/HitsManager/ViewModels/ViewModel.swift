@@ -48,9 +48,9 @@ class ViewModel {
         return cellWidth
     }
     
-    func getInsertOfSection() -> UIEdgeInsets {
-        let insertOfSection = UIEdgeInsets(top: 20, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
-        return insertOfSection
+    func getInsetOfSection() -> UIEdgeInsets {
+        let insetOfSection = UIEdgeInsets(top: 20, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
+        return insetOfSection
     }
     
     func getItemsWidth() -> CGFloat {

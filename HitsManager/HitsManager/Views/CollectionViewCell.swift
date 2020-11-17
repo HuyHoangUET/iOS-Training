@@ -22,7 +22,7 @@ class HitCollectionViewCell: UICollectionViewCell {
         imageView.image = nil
     }
     
-    func sizeForSelectedCell(cellWidth: CGFloat) -> CGSize {
+    func sizeForSellectedCell(cellWidth: CGFloat) -> CGSize {
         imageView.contentMode = .scaleAspectFit
         let imageWidth = imageView.image?.size.width ?? 0
         let imageHeight = imageView.image?.size.height ?? 0
@@ -30,7 +30,7 @@ class HitCollectionViewCell: UICollectionViewCell {
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
-    func sizeForDeselectedCell() {
+    func sizeForDesellectedCell() {
         imageView.contentMode = .scaleAspectFill
     }
     
@@ -51,13 +51,13 @@ class HitCollectionViewCell: UICollectionViewCell {
     // MARK: - action
     @IBAction func likeButton(_ sender: UIButton) {
         let heartImage = UIImage(systemName: "heart.fill")
-        let cell = sender.superview?.superview as! HitCollectionViewCell
+        let cell = sender.superview?.superview as? HitCollectionViewCell
         if sender.currentImage == heartImage {
             sender.setImage(UIImage(systemName: "heart"), for: .normal)
-            delegate?.didDisLikeImage(id: cell.idImage)
+            delegate?.didDisLikeImage(id: cell?.idImage ?? 0)
         } else {
             sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            delegate?.didLikeImage(id: cell.idImage)
+            delegate?.didLikeImage(id: cell?.idImage ?? 0)
         }
     }
 }
