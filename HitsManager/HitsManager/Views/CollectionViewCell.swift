@@ -24,8 +24,8 @@ class HitCollectionViewCell: UICollectionViewCell {
     
     func sizeForSelectedCell(cellWidth: CGFloat) -> CGSize {
         imageView.contentMode = .scaleAspectFit
-        let imageWidth = imageView.image?.size.width ?? CGFloat(0)
-        let imageHeight = imageView.image?.size.height ?? CGFloat(0)
+        let imageWidth = imageView.image?.size.width ?? 0
+        let imageHeight = imageView.image?.size.height ?? 0
         let cellHeight = cellWidth * (imageHeight / imageWidth)
         return CGSize(width: cellWidth, height: cellHeight)
     }

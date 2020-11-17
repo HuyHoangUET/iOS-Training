@@ -12,7 +12,7 @@ class ViewModel {
     weak var delegate: HitCollectionViewDelegate?
     let dataManager = DataManager()
     private let numberOfItemsInRow = 3
-    private let paddingSpace = CGFloat(12)
+    private let paddingSpace: CGFloat = 12
     private let screenWidth = UIScreen.main.bounds.width
     private var itemsWidth = CGFloat()
     var hits: [Hit] = []
@@ -33,20 +33,19 @@ class ViewModel {
         }
     }
     
-    func getHitsInNextPage(collectionView: UICollectionView, indexPaths: [IndexPath]) {
+    func getHitsInNextPage(indexPaths: [IndexPath], completion: @escaping ([Hit]) -> ()) {
         if indexPaths.last?.row == hits.count - 1 {
             curentPage += 1
             getHitsByPage() { (hits) in
-                collectionView.reloadItems(at: indexPaths)
+                completion(hits)
             }
         }
     }
     
     // Size and layout for collection view
-    func getSizeForDidSellectItem(collectionView: UICollectionView, indexPath: IndexPath) -> CGSize {
+    func getCellWidth() -> CGFloat {
         let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
-        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
-        return cell?.sizeForSelectedCell(cellWidth: cellWidth) ?? CGSize()
+        return cellWidth
     }
     
     func getInsertOfSection() -> UIEdgeInsets {

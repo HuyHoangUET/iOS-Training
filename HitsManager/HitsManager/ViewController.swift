@@ -34,11 +34,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell
-        cell?.delegate = self
-        let hit = viewModel.hits[indexPath.row]
-        showHitCollectionViewCell(hit: hit, cell: cell ?? HitCollectionViewCell(), indexPath: indexPath)
-        return cell ?? HitCollectionViewCell()
+        let cell = initHitCollectionViewCell(indexPath: indexPath)
+        return cell
     }
 }
 
@@ -54,7 +51,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         if viewModel.sellectedCell == indexPath {
-            return viewModel.getSizeForDidSellectItem(collectionView: collectionView, indexPath: indexPath)
+            return getSizeForDidSellectItem(indexPath: indexPath)
         }
         
         return viewModel.getSizeForItem()
@@ -86,7 +83,9 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 // Load next page
 extension ViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        viewModel.getHitsInNextPage(collectionView: collectionView, indexPaths: indexPaths)
+        viewModel.getHitsInNextPage(indexPaths: indexPaths) { (hits) in
+            collectionView.reloadData()
+        }
     }
 }
 
@@ -111,17 +110,31 @@ extension ViewController: HitCollectionViewDelegate {
 
 // Display collectionView cell
 extension ViewController {
-    func showHitCollectionViewCell(hit: Hit, cell: HitCollectionViewCell, indexPath: IndexPath) {
-        cell.showLoadingIndicator()
-        viewModel.dataManager.getImage(url: hit.imageURL) { (image) in
-            cell.setImageForCell(image: image, id: hit.id)
-            cell.loadingIndicator.stopAnimating()
-            self.handleLikeButton(cell: cell, indexPath: indexPath)
+    func initHitCollectionViewCell(indexPath: IndexPath) -> HitCollectionViewCell {
+        guard indexPath.row < viewModel.hits.count else {
+            return HitCollectionViewCell()
         }
+        let hit = viewModel.hits[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell
+        cell?.delegate = self
+        cell?.showLoadingIndicator()
+        viewModel.dataManager.getImage(url: hit.imageURL) { (image) in
+            cell?.setImageForCell(image: image, id: hit.id)
+            cell?.loadingIndicator.stopAnimating()
+            self.handleLikeButton(cell: cell ?? HitCollectionViewCell(), indexPath: indexPath)
+        }
+        return cell ?? HitCollectionViewCell()
+    }
+    
+    func getSizeForDidSellectItem(indexPath: IndexPath) -> CGSize {
+        let cellWidth = viewModel.getCellWidth()
+        let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
+        return cell?.sizeForSelectedCell(cellWidth: cellWidth) ?? CGSize()
     }
     
     func didSellectCell(indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell
+        guard cell?.imageView.image != nil else { return }
         if viewModel.sellectedCell != indexPath {
             viewModel.sellectedCell = indexPath
         } else {
