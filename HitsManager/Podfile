@@ -2,11 +2,12 @@
 # platform :ios, '9.0'
 
 target 'HitsManager' do
-	pod 'Alamofire'
-  pod 'AlamofireImage'
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for HitsManager
+  pod 'Alamofire'
+  pod 'AlamofireImage'
+  pod 'RealmSwift'
 
 end

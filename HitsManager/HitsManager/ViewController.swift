@@ -92,19 +92,21 @@ extension ViewController: UICollectionViewDataSourcePrefetching {
 // Handle like image
 extension ViewController: HitCollectionViewDelegate {
     func didLikeImage(id: Int) {
-        viewModel.setDidLikeImagesId.insert(id)
+        DidLikeImage.addAnObject(id: id)
     }
     
     func didDisLikeImage(id: Int) {
-        viewModel.setDidLikeImagesId.remove(id)
+        DidLikeImage.deleteAnObject(id: id)
     }
     
     func handleLikeButton(cell: HitCollectionViewCell, indexPath: IndexPath) {
         guard let hitId = viewModel.hits[safeIndex: indexPath.row]?.id else { return }
-        if viewModel.setDidLikeImagesId.isSuperset(of: [hitId]) {
-            cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        } else {
-            cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        DidLikeImage.getListId { (listDidLikeImageId) in
+            if listDidLikeImageId.isSuperset(of: [hitId]) {
+                cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            } else {
+                cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            }
         }
     }
 }

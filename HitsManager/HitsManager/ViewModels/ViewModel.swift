@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class ViewModel {
     weak var delegate: HitCollectionViewDelegate?
@@ -18,7 +19,7 @@ class ViewModel {
     var hits: [Hit] = []
     var sellectedCell = IndexPath()
     var curentPage = 1
-    var setDidLikeImagesId: Set<Int> = []
+    private let realm = try! Realm()
     
     // Get data from api
     func getHitsByPage(completion: @escaping ([Hit]) -> ()) {
