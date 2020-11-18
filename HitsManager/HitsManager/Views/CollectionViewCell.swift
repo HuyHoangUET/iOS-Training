@@ -18,6 +18,7 @@ class HitCollectionViewCell: UICollectionViewCell {
     private let viewModel = ViewModel()
     let loadingIndicator = UIActivityIndicatorView()
     var idImage = 0
+    var imageUrl = ""
     let realm = try! Realm()
     
     override func prepareForReuse() {
@@ -38,9 +39,10 @@ class HitCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
     }
     
-    func setImageForCell(image: UIImage, id: Int) {
+    func setImageForCell(image: UIImage, id: Int, url: String) {
         imageView.image = image
         self.idImage = id
+        self.imageUrl = url
     }
     
     func showLoadingIndicator() {
@@ -61,7 +63,8 @@ class HitCollectionViewCell: UICollectionViewCell {
             delegate?.didDisLikeImage(id: cell.idImage)
         } else {
             sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            delegate?.didLikeImage(id: cell.idImage)
+            delegate?.didLikeImage(id: cell.idImage, url: imageUrl)
+            
         }
     }
 }

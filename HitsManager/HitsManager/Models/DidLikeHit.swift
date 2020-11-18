@@ -8,18 +8,20 @@
 import Foundation
 import RealmSwift
 
-class DidLikeImage: Object {
+class DidLikeHit: Object {
     @objc dynamic var id = 0
+    @objc dynamic var url = ""
     
     override class func primaryKey() -> String? {
         return "id"
     }
     
-    static func addAnObject(id: Int) {
+    static func addAnObject(id: Int, url: String) {
         do {
             let realm = try Realm()
-            let didLikeImage = DidLikeImage()
+            let didLikeImage = DidLikeHit()
             didLikeImage.id = id
+            didLikeImage.url = url
             try realm.write {
                 realm.add(didLikeImage)
             }
@@ -31,8 +33,10 @@ class DidLikeImage: Object {
     static func deleteAnObject(id: Int) {
         do {
             let realm = try Realm()
+            guard let didLikeImage = realm.object(ofType: self, forPrimaryKey: id) else { return }
+            
             try realm.write {
-                realm.delete(realm.objects(self).filter("id=%@", id))
+                realm.delete(didLikeImage)
             }
         } catch {
             print("Delete object fail.")
@@ -50,7 +54,7 @@ class DidLikeImage: Object {
         }
     }
     
-    static func getListId(completion: @escaping ((Set<Int>) -> ())) {
+    static func getListId() -> Set<Int> {
         do {
             let realm = try Realm()
             let results = realm.objects(self)
@@ -60,9 +64,25 @@ class DidLikeImage: Object {
                 let imageId = didLikeImage.id
                 listDidLikeImageId.insert(imageId)
             }
-            completion(listDidLikeImageId)
+            return listDidLikeImageId
         } catch {
-            print("")
+            return []
+        }
+    }
+    
+    static func getListUrl() -> [String] {
+        do {
+            let realm = try Realm()
+            let results = realm.objects(self)
+            let didLikeImageArray = Array(results)
+            var listUrl: [String] = []
+            for didLikeImage in didLikeImageArray {
+                let url = didLikeImage.url
+                listUrl.append(url)
+            }
+            return listUrl
+        } catch {
+            return []
         }
     }
 }

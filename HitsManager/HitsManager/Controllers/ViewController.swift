@@ -14,12 +14,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var mainView: UIView!
     
     private let viewModel = ViewModel()
+    private let userView = UserViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.prefetchDataSource = self
+        collectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         
         viewModel.getHitsByPage() { (hits) in
             self.collectionView.reloadData()
@@ -91,22 +91,21 @@ extension ViewController: UICollectionViewDataSourcePrefetching {
 
 // Handle like image
 extension ViewController: HitCollectionViewDelegate {
-    func didLikeImage(id: Int) {
-        DidLikeImage.addAnObject(id: id)
+    func didLikeImage(id: Int, url: String) {
+        DidLikeHit.addAnObject(id: id, url: url)
     }
     
     func didDisLikeImage(id: Int) {
-        DidLikeImage.deleteAnObject(id: id)
+        DidLikeHit.deleteAnObject(id: id)
     }
     
     func handleLikeButton(cell: HitCollectionViewCell, indexPath: IndexPath) {
         guard let hitId = viewModel.hits[safeIndex: indexPath.row]?.id else { return }
-        DidLikeImage.getListId { (listDidLikeImageId) in
-            if listDidLikeImageId.isSuperset(of: [hitId]) {
-                cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            } else {
-                cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
-            }
+        let listDidLikeImageId = DidLikeHit.getListId()
+        if listDidLikeImageId.isSuperset(of: [hitId]) {
+            cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
     }
 }
@@ -119,7 +118,7 @@ extension ViewController {
         cell.delegate = self
         cell.showLoadingIndicator()
         viewModel.dataManager.getImage(url: hit.imageURL) { (image) in
-            cell.setImageForCell(image: image, id: hit.id)
+            cell.setImageForCell(image: image, id: hit.id, url: hit.imageURL)
             cell.loadingIndicator.stopAnimating()
             self.handleLikeButton(cell: cell , indexPath: indexPath)
         }
@@ -157,5 +156,13 @@ extension Array {
             return nil
         }
         return self[index]
+    }
+}
+
+extension ViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let userView = segue.destination as? UserViewController {
+            userView.viewDidLoad()
+        }
     }
 }

@@ -17,6 +17,7 @@ class ViewModel {
     private let screenWidth = UIScreen.main.bounds.width
     private var itemsWidth = CGFloat()
     var hits: [Hit] = []
+    var didLikeHits: [Hit] = []
     var sellectedCell = IndexPath()
     var curentPage = 1
     private let realm = try! Realm()
@@ -38,9 +39,14 @@ class ViewModel {
         if indexPaths.last?.row == hits.count - 1 {
             curentPage += 1
             getHitsByPage() { (hits) in
-                completion(hits)
+                self.didLikeHits += hits
+                completion(self.hits)
             }
         }
+    }
+    
+    func reloadLibrary() {
+        
     }
     
     // Size and layout for collection view
@@ -50,7 +56,7 @@ class ViewModel {
     }
     
     func getInsetOfSection() -> UIEdgeInsets {
-        let insetOfSection = UIEdgeInsets(top: 20, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
+        let insetOfSection = UIEdgeInsets(top: 3, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
         return insetOfSection
     }
     
