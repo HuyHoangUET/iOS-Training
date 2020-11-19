@@ -120,8 +120,16 @@ extension ViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell else { return HitCollectionViewCell()}
         cell.delegate = self
         cell.showLoadingIndicator()
-        let image = viewModel.getSavedImage(named: "\(hit.id)")
+//        let image = viewModel.getSavedImage(named: "\(hit.id)")
+//        if image != nil {
+//            cell.setImageForCell(image: image!, id: hit.id, url: hit.imageURL)
+//            cell.loadingIndicator.stopAnimating()
+//            self.handleLikeButton(cell: cell , indexPath: indexPath)
+//            return cell
+//        }
+        let image = cell.imageCache.object(forKey: "\(hit.id)" as NSString) as? UIImage
         if image != nil {
+            print("image from imageCache")
             cell.setImageForCell(image: image!, id: hit.id, url: hit.imageURL)
             cell.loadingIndicator.stopAnimating()
             self.handleLikeButton(cell: cell , indexPath: indexPath)
@@ -131,7 +139,7 @@ extension ViewController {
             cell.setImageForCell(image: image, id: hit.id, url: hit.imageURL)
             cell.loadingIndicator.stopAnimating()
             self.handleLikeButton(cell: cell , indexPath: indexPath)
-            self.viewModel.saveImage(image: image, imageName: "\(hit.id)")
+            cell.imageCache.setObject(image, forKey: "\(hit.id)" as NSString)
         }
         return cell
     }
