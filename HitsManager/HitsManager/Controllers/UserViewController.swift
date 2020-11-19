@@ -26,12 +26,9 @@ class UserViewController: UIViewController{
         listImageUrl = DidLikeHit.getListUrl()
         imageCollectionView.reloadData()
         imageCollectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
-        numberOfImagesLabel.text = "\(listImageUrl.count) ảnh đã thích"
-        usernameLabel.text = "username"
-        userImageView.layer.cornerRadius = userImageView.frame.width / 2.0
-        userImageView.layer.masksToBounds = true
-        userImageView.translatesAutoresizingMaskIntoConstraints = false
-        userImageView.heightAnchor.constraint(equalTo: userImageView.widthAnchor, multiplier: 1).isActive = true
+        customUserImage()
+        customUsernameLabel()
+        customNumberOfImageLabel()
     }
 }
 
@@ -59,12 +56,11 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         if viewModel.sellectedCell == indexPath {
-//            return getSizeForDidSellectItem(indexPath: indexPath)
-            let cell = collectionView.cellForItem(at: indexPath) as! HitCollectionViewCell
-            return cell.sizeForSellectedCell(cellWidth: viewModel.getCellWidth())
+            return getSizeForDidSellectItem(indexPath: indexPath)
+        } else {
+            return viewModel.getSizeForItem()
         }
         
-        return viewModel.getSizeForItem()
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -135,5 +131,23 @@ extension UserViewController {
     func didDeSellectCell(indexPath: IndexPath) {
         guard let cell = imageCollectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return }
         cell.sizeForDesellectedCell()
+    }
+}
+
+// Custom user view
+extension UserViewController {
+    func customUserImage() {
+        userImageView.layer.cornerRadius = userImageView.frame.width / 2.0
+        userImageView.layer.masksToBounds = true
+        userImageView.translatesAutoresizingMaskIntoConstraints = false
+        userImageView.heightAnchor.constraint(equalTo: userImageView.widthAnchor, multiplier: 1).isActive = true
+    }
+    
+    func customUsernameLabel() {
+        usernameLabel.text = "username"
+    }
+    
+    func customNumberOfImageLabel() {
+        numberOfImagesLabel.text = "\(listImageUrl.count) ảnh đã thích"
     }
 }

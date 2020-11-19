@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class ViewController: UIViewController {
     // MARK: - outlet
     @IBOutlet weak var collectionView: UICollectionView!

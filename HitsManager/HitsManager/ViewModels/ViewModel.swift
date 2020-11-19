@@ -15,7 +15,6 @@ class ViewModel {
     private let numberOfItemsInRow = 3
     private let paddingSpace: CGFloat = 12
     private let screenWidth = UIScreen.main.bounds.width
-    private var itemsWidth = CGFloat()
     var hits: [Hit] = []
     var didLikeHits: [Hit] = []
     var sellectedCell = IndexPath()
