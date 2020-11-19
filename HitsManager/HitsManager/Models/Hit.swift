@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
 struct Hit: Decodable {
     let id: Int
     let imageURL: String
-    let imageWidth: Float
-    let imageHeight: Float
+    let imageWidth: CGFloat
+    let imageHeight: CGFloat
     
     enum CodingKeys: String, CodingKey {
         case id = "id"

@@ -18,7 +18,9 @@
 		25230433254FFF0700F79252 /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25230432254FFF0700F79252 /* Hit.swift */; };
 		252304372550100700F79252 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252304362550100700F79252 /* DataManager.swift */; };
 		258498BB2554E9B500BE6C80 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258498BA2554E9B500BE6C80 /* ViewModel.swift */; };
-		25C90D32255D1FF50098BA58 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C90D31255D1FF50098BA58 /* Protocols.swift */; };
+		25C90D32255D1FF50098BA58 /* HitCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C90D31255D1FF50098BA58 /* HitCollectionViewDelegate.swift */; };
+		25F4601525662A8700F0CADC /* SizeForCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F4601425662A8700F0CADC /* SizeForCell.swift */; };
+		25F460192566527800F0CADC /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F460182566527800F0CADC /* UserViewModel.swift */; };
 		25FBCC832564CAEE00A2BDA7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FBCC822564CAEE00A2BDA7 /* UserViewController.swift */; };
 		25FBCCA12564D39300A2BDA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2523041A254FFA1E00F79252 /* Main.storyboard */; };
 		25FBCCD32564D93000A2BDA7 /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FBCCD22564D93000A2BDA7 /* CollectionViewCell.xib */; };
@@ -40,7 +42,9 @@
 		25230432254FFF0700F79252 /* Hit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hit.swift; sourceTree = "<group>"; };
 		252304362550100700F79252 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		258498BA2554E9B500BE6C80 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		25C90D31255D1FF50098BA58 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		25C90D31255D1FF50098BA58 /* HitCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitCollectionViewDelegate.swift; sourceTree = "<group>"; };
+		25F4601425662A8700F0CADC /* SizeForCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeForCell.swift; sourceTree = "<group>"; };
+		25F460182566527800F0CADC /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		25FBCC822564CAEE00A2BDA7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		25FBCCD22564D93000A2BDA7 /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		27B1D1CD0C8084CFF016163B /* Pods-HitsManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HitsManager.release.xcconfig"; path = "Target Support Files/Pods-HitsManager/Pods-HitsManager.release.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +106,7 @@
 			children = (
 				2523042B254FFDBF00F79252 /* CollectionViewCell.swift */,
 				25FBCCD22564D93000A2BDA7 /* CollectionViewCell.xib */,
+				25F4601425662A8700F0CADC /* SizeForCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -128,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				258498BA2554E9B500BE6C80 /* ViewModel.swift */,
+				25F460182566527800F0CADC /* UserViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -135,7 +141,7 @@
 		25C90D30255D1FE30098BA58 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				25C90D31255D1FF50098BA58 /* Protocols.swift */,
+				25C90D31255D1FF50098BA58 /* HitCollectionViewDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -285,10 +291,12 @@
 				258498BB2554E9B500BE6C80 /* ViewModel.swift in Sources */,
 				250F8F532563A55900642A5C /* DidLikeHit.swift in Sources */,
 				25FBCC832564CAEE00A2BDA7 /* UserViewController.swift in Sources */,
+				25F4601525662A8700F0CADC /* SizeForCell.swift in Sources */,
 				25230430254FFEB800F79252 /* Result.swift in Sources */,
 				25230415254FFA1E00F79252 /* AppDelegate.swift in Sources */,
 				252304372550100700F79252 /* DataManager.swift in Sources */,
-				25C90D32255D1FF50098BA58 /* Protocols.swift in Sources */,
+				25C90D32255D1FF50098BA58 /* HitCollectionViewDelegate.swift in Sources */,
+				25F460192566527800F0CADC /* UserViewModel.swift in Sources */,
 				2523042C254FFDBF00F79252 /* CollectionViewCell.swift in Sources */,
 				25230417254FFA1E00F79252 /* SceneDelegate.swift in Sources */,
 				25230433254FFF0700F79252 /* Hit.swift in Sources */,

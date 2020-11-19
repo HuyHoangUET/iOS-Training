@@ -50,7 +50,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         if viewModel.sellectedCell == indexPath {
-            return getSizeForDidSellectItem(indexPath: indexPath)
+            return viewModel.getSizeForDidSellectItem(imageWidth: viewModel.hits[indexPath.row].imageWidth, imageHeight: viewModel.hits[indexPath.row].imageHeight)
         }
         
         return viewModel.getSizeForItem()
@@ -70,12 +70,16 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     
     // Sellect cell
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        didSellectCell(indexPath: indexPath)
+        if viewModel.sellectedCell != indexPath {
+            viewModel.sellectedCell = indexPath
+        } else {
+            viewModel.sellectedCell = IndexPath()
+        }
+        collectionView.performBatchUpdates(nil, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         viewModel.sellectedCell = IndexPath()
-        didDeSellectCell(indexPath: indexPath)
     }
 }
 
@@ -122,29 +126,6 @@ extension ViewController {
             self.handleLikeButton(cell: cell , indexPath: indexPath)
         }
         return cell
-    }
-    
-    func getSizeForDidSellectItem(indexPath: IndexPath) -> CGSize {
-        let cellWidth = viewModel.getCellWidth()
-        guard let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return CGSize()}
-        return cell.sizeForSellectedCell(cellWidth: cellWidth)
-    }
-    
-    func didSellectCell(indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return }
-        guard cell.imageView.image != nil else { return }
-        if viewModel.sellectedCell != indexPath {
-            viewModel.sellectedCell = indexPath
-        } else {
-            viewModel.sellectedCell = IndexPath()
-            cell.sizeForDesellectedCell()
-        }
-        collectionView.performBatchUpdates(nil, completion: nil)
-    }
-    
-    func didDeSellectCell(indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return }
-        cell.sizeForDesellectedCell()
     }
 }
 

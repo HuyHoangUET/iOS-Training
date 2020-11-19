@@ -27,18 +27,6 @@ class HitCollectionViewCell: UICollectionViewCell {
         likeButton.setImage(nil, for: .normal)
     }
     
-    func sizeForSellectedCell(cellWidth: CGFloat) -> CGSize {
-        imageView.contentMode = .scaleAspectFit
-        let imageWidth = imageView.image?.size.width ?? 0
-        let imageHeight = imageView.image?.size.height ?? 0
-        let cellHeight = cellWidth * (imageHeight / imageWidth)
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-    
-    func sizeForDesellectedCell() {
-        imageView.contentMode = .scaleAspectFill
-    }
-    
     func setImageForCell(image: UIImage, id: Int, url: String) {
         imageView.image = image
         self.idImage = id

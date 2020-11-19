@@ -17,8 +17,9 @@ class UserViewController: UIViewController{
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
-    let viewModel = ViewModel()
-    var listImageUrl: [String] = []
+    private let viewModel = ViewModel()
+    private var listImageUrl: [String] = []
+    private var badgeNumber = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,13 @@ class UserViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         let newListImageUrl = DidLikeHit.getListUrl()
+        
         if listImageUrl != newListImageUrl {
+            for url in newListImageUrl {
+                if !listImageUrl.contains(url) {
+                    badgeNumber += 1
+                }
+            }
             listImageUrl = newListImageUrl
             imageCollectionView.reloadData()
         }
@@ -62,11 +69,7 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if viewModel.sellectedCell == indexPath {
-            return getSizeForDidSellectItem(indexPath: indexPath)
-        } else {
-            return viewModel.getSizeForItem()
-        }
+        return viewModel.getSizeForItem()
         
     }
     
@@ -80,25 +83,6 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return viewModel.getMinimumLineSpacingForSection()
-    }
-    
-    // Sellect cell
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        didSellectCell(indexPath: indexPath)
-        guard let cell = imageCollectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return }
-        guard cell.imageView.image != nil else { return }
-        if viewModel.sellectedCell != indexPath {
-            viewModel.sellectedCell = indexPath
-        } else {
-            viewModel.sellectedCell = IndexPath()
-            cell.sizeForDesellectedCell()
-        }
-        imageCollectionView.performBatchUpdates(nil, completion: nil)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        viewModel.sellectedCell = IndexPath()
-        didDeSellectCell(indexPath: indexPath)
     }
 }
 
@@ -114,29 +98,6 @@ extension UserViewController {
         }
         return cell
     }
-    
-    func getSizeForDidSellectItem(indexPath: IndexPath) -> CGSize {
-        let cellWidth = viewModel.getCellWidth()
-        guard let cell = imageCollectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return CGSize()}
-        return cell.sizeForSellectedCell(cellWidth: cellWidth)
-    }
-    
-    func didSellectCell(indexPath: IndexPath) {
-        guard let cell = imageCollectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return }
-        guard cell.imageView.image != nil else { return }
-        if viewModel.sellectedCell != indexPath {
-            viewModel.sellectedCell = indexPath
-        } else {
-            viewModel.sellectedCell = IndexPath()
-            cell.sizeForDesellectedCell()
-        }
-        imageCollectionView.performBatchUpdates(nil, completion: nil)
-    }
-    
-    func didDeSellectCell(indexPath: IndexPath) {
-        guard let cell = imageCollectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return }
-        cell.sizeForDesellectedCell()
-    }
 }
 
 // Custom user view
@@ -144,8 +105,6 @@ extension UserViewController {
     func customUserImage() {
         userImageView.layer.cornerRadius = userImageView.frame.width / 2.0
         userImageView.layer.masksToBounds = true
-        userImageView.translatesAutoresizingMaskIntoConstraints = false
-        userImageView.heightAnchor.constraint(equalTo: userImageView.widthAnchor, multiplier: 1).isActive = true
     }
     
     func customUsernameLabel() {

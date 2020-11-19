@@ -12,14 +12,11 @@ import RealmSwift
 class ViewModel {
     weak var delegate: HitCollectionViewDelegate?
     let dataManager = DataManager()
-    private let numberOfItemsInRow = 3
-    private let paddingSpace: CGFloat = 12
-    private let screenWidth = UIScreen.main.bounds.width
     var hits: [Hit] = []
-    var didLikeHits: [Hit] = []
     var sellectedCell = IndexPath()
     var curentPage = 1
     private let realm = try! Realm()
+    private var badgeNumber = 0
     
     // Get data from api
     func getHitsByPage(completion: @escaping ([Hit]) -> ()) {
@@ -38,21 +35,12 @@ class ViewModel {
         if indexPaths.last?.row == hits.count - 1 {
             curentPage += 1
             getHitsByPage() { (hits) in
-                self.didLikeHits += hits
                 completion(self.hits)
             }
         }
     }
     
-    func reloadLibrary() {
-        
-    }
-    
     // Size and layout for collection view
-    func getCellWidth() -> CGFloat {
-        let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))
-        return cellWidth
-    }
     
     func getInsetOfSection() -> UIEdgeInsets {
         let insetOfSection = UIEdgeInsets(top: 3, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
@@ -69,6 +57,12 @@ class ViewModel {
         let sizeForItem = CGSize(width: itemsWidth/CGFloat(numberOfItemsInRow),
                              height: itemsWidth/CGFloat(numberOfItemsInRow))
         return sizeForItem
+    }
+    
+    func getSizeForDidSellectItem(imageWidth: CGFloat, imageHeight: CGFloat) -> CGSize {
+        let cellWidth = getCellWidth()
+        let cellHeight = cellWidth * (imageHeight / imageWidth)
+        return CGSize(width: cellWidth, height: cellHeight)
     }
     
     func getMinimumInteritemSpacingForSection() -> CGFloat {
