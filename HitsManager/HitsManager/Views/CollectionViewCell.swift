@@ -15,7 +15,6 @@ class HitCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var likeButton: UIButton!
     
     weak var delegate: HitCollectionViewDelegate?
-    private let viewModel = ViewModel()
     let loadingIndicator = UIActivityIndicatorView()
     var idImage = 0
     var imageUrl = ""

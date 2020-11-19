@@ -15,8 +15,7 @@ class ViewModel {
     var hits: [Hit] = []
     var sellectedCell = IndexPath()
     var curentPage = 1
-    private let realm = try! Realm()
-    private var badgeNumber = 0
+    var imageCache = NSCache<NSString, UIImage>()
     
     // Get data from api
     func getHitsByPage(completion: @escaping ([Hit]) -> ()) {
@@ -40,6 +39,22 @@ class ViewModel {
         }
     }
     
+    func saveImage(image: UIImage, imageName: String) {
+        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else { return }
+        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else { return }
+        do {
+            try data.write(to: directory.appendingPathComponent(imageName + ".png")!)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getSavedImage(named: String) -> UIImage? {
+        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+            return UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(named).path)
+        }
+        return nil
+    }
     // Size and layout for collection view
     
     func getInsetOfSection() -> UIEdgeInsets {

@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Dictionary-->
+        <!--Directory-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HitsManager" customModuleProvider="target" sceneMemberID="viewController">
@@ -42,7 +42,7 @@
                             <constraint firstItem="bgj-Vy-Ghu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Wrw-gE-sny"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Dictionary" image="square.grid.2x2" catalog="system" id="XQe-xw-5Df"/>
+                    <tabBarItem key="tabBarItem" title="Directory" image="square.grid.2x2" catalog="system" id="XQe-xw-5Df"/>
                     <navigationItem key="navigationItem" id="hCz-Be-j28"/>
                     <connections>
                         <outlet property="collectionView" destination="bgj-Vy-Ghu" id="HFT-ji-CVg"/>
