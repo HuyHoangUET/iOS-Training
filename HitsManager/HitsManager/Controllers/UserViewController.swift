@@ -26,12 +26,12 @@ class UserViewController: UIViewController{
         imageCollectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         customUserImage()
         customUsernameLabel()
-        customNumberOfImageLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         listImageUrl = DidLikeHit.getListUrl()
         imageCollectionView.reloadData()
+        customNumberOfImageLabel()
     }
 }
 
