@@ -127,7 +127,7 @@ extension ViewController {
 //            self.handleLikeButton(cell: cell , indexPath: indexPath)
 //            return cell
 //        }
-        let image = cell.imageCache.object(forKey: "\(hit.id)" as NSString) as? UIImage
+        let image = viewModel.imageCache.object(forKey: "\(hit.id)" as NSString) as? UIImage
         if image != nil {
             print("image from imageCache")
             cell.setImageForCell(image: image!, id: hit.id, url: hit.imageURL)
@@ -139,7 +139,7 @@ extension ViewController {
             cell.setImageForCell(image: image, id: hit.id, url: hit.imageURL)
             cell.loadingIndicator.stopAnimating()
             self.handleLikeButton(cell: cell , indexPath: indexPath)
-            cell.imageCache.setObject(image, forKey: "\(hit.id)" as NSString)
+            self.viewModel.imageCache.setObject(image, forKey: "\(hit.id)" as NSString)
         }
         return cell
     }

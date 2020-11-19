@@ -19,7 +19,6 @@ class HitCollectionViewCell: UICollectionViewCell {
     var idImage = 0
     var imageUrl = ""
     let realm = try! Realm()
-    let imageCache = NSCache<AnyObject, AnyObject>()
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -40,10 +39,6 @@ class HitCollectionViewCell: UICollectionViewCell {
         loadingIndicator.color = .white
         imageView.addSubview(loadingIndicator)
         loadingIndicator.startAnimating()
-    }
-    
-    func cacheImage(image: UIImage) {
-        imageCache.setObject(image, forKey: "\(idImage)" as NSString)
     }
     
     // MARK: - action

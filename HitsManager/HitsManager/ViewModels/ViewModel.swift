@@ -15,7 +15,7 @@ class ViewModel {
     var hits: [Hit] = []
     var sellectedCell = IndexPath()
     var curentPage = 1
-    var imageCache = NSCache<NSString, UIImage>()
+    let imageCache = NSCache<AnyObject, AnyObject>()
     
     // Get data from api
     func getHitsByPage(completion: @escaping ([Hit]) -> ()) {
@@ -37,6 +37,10 @@ class ViewModel {
                 completion(self.hits)
             }
         }
+    }
+    
+    func cacheImage(image: UIImage, idImage: Int) {
+        imageCache.setObject(image, forKey: "\(idImage)" as NSString)
     }
     
 //    func saveImage(image: UIImage, imageName: String) {
