@@ -23,14 +23,18 @@ class UserViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        listImageUrl = DidLikeHit.getListUrl()
         imageCollectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         customUserImage()
         customUsernameLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        listImageUrl = DidLikeHit.getListUrl()
-        imageCollectionView.reloadData()
+        let newListImageUrl = DidLikeHit.getListUrl()
+        if listImageUrl != newListImageUrl {
+            listImageUrl = newListImageUrl
+            imageCollectionView.reloadData()
+        }
         customNumberOfImageLabel()
     }
 }
@@ -94,9 +98,7 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         viewModel.sellectedCell = IndexPath()
-//        didDeSellectCell(indexPath: indexPath)
-        guard let cell = imageCollectionView.cellForItem(at: indexPath) as? HitCollectionViewCell else { return }
-        cell.sizeForDesellectedCell()
+        didDeSellectCell(indexPath: indexPath)
     }
 }
 
