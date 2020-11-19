@@ -43,24 +43,6 @@ class ViewModel {
         imageCache.setObject(image, forKey: "\(idImage)" as NSString)
     }
     
-//    func saveImage(image: UIImage, imageName: String) {
-//        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else { return }
-//        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else { return }
-//        do {
-//            try data.write(to: directory.appendingPathComponent(imageName + ".png")!)
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
-//
-//    func getSavedImage(named: String) -> UIImage? {
-//        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
-//            return UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(named).path)
-//        }
-//        return nil
-//    }
-    // Size and layout for collection view
-    
     func getInsetOfSection() -> UIEdgeInsets {
         let insetOfSection = UIEdgeInsets(top: 3, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
         return insetOfSection
