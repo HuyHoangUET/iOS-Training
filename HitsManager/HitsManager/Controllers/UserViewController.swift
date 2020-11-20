@@ -18,6 +18,7 @@ class UserViewController: UIViewController{
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     private let viewModel = ViewModel()
+    private let sizeOfItem = SizeOfItem()
     private var listImageUrl: [String] = []
     private var badgeNumber = 0
     
@@ -63,26 +64,26 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return viewModel.getInsetOfSection()
+        return sizeOfItem.getInsetOfSection()
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return viewModel.getSizeForItem()
+        return sizeOfItem.getSizeForItem()
         
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return viewModel.getMinimumInteritemSpacingForSection()
+        return sizeOfItem.getMinimumInteritemSpacingForSection()
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return viewModel.getMinimumLineSpacingForSection()
+        return sizeOfItem.getMinimumLineSpacingForSection()
     }
 }
 

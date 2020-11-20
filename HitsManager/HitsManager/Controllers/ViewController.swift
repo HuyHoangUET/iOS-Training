@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var mainView: UIView!
     
     private let viewModel = ViewModel()
+    private let sizeOfItem = SizeOfItem()
     private let userView = UserViewController()
     
     override func viewDidLoad() {
@@ -43,29 +44,29 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return viewModel.getInsetOfSection()
+        return sizeOfItem.getInsetOfSection()
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         if viewModel.sellectedCell == indexPath {
-            return viewModel.getSizeForDidSellectItem(imageWidth: viewModel.hits[indexPath.row].imageWidth, imageHeight: viewModel.hits[indexPath.row].imageHeight)
+            return sizeOfItem.getSizeForDidSellectItem(imageWidth: viewModel.hits[indexPath.row].imageWidth, imageHeight: viewModel.hits[indexPath.row].imageHeight)
         }
         
-        return viewModel.getSizeForItem()
+        return sizeOfItem.getSizeForItem()
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return viewModel.getMinimumInteritemSpacingForSection()
+        return sizeOfItem.getMinimumInteritemSpacingForSection()
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return viewModel.getMinimumLineSpacingForSection()
+        return sizeOfItem.getMinimumLineSpacingForSection()
     }
     
     // Sellect cell
@@ -120,18 +121,10 @@ extension ViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell else { return HitCollectionViewCell()}
         cell.delegate = self
         cell.showLoadingIndicator()
-        let image = viewModel.imageCache.object(forKey: "\(hit.id)" as NSString) as? UIImage
-        if image != nil {
-            cell.setImageForCell(image: image!, id: hit.id, url: hit.imageURL)
-            cell.loadingIndicator.stopAnimating()
-            self.handleLikeButton(cell: cell , indexPath: indexPath)
-            return cell
-        }
-        viewModel.dataManager.getImage(url: hit.imageURL) { (image) in
-            cell.setImageForCell(image: image, id: hit.id, url: hit.imageURL)
-            cell.loadingIndicator.stopAnimating()
-            self.handleLikeButton(cell: cell , indexPath: indexPath)
-            self.viewModel.imageCache.setObject(image, forKey: "\(hit.id)" as NSString)
+        viewModel.getImageForCell(indexPath: indexPath) { (image) in
+                cell.setImageForCell(image: image, id: hit.id, url: hit.imageURL)
+                cell.loadingIndicator.stopAnimating()
+                self.handleLikeButton(cell: cell , indexPath: indexPath)
         }
         return cell
     }
@@ -144,13 +137,5 @@ extension Array {
             return nil
         }
         return self[index]
-    }
-}
-
-extension ViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let userView = segue.destination as? UserViewController {
-            userView.viewDidLoad()
-        }
     }
 }

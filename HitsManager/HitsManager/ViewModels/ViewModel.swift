@@ -43,36 +43,15 @@ class ViewModel {
         imageCache.setObject(image, forKey: "\(idImage)" as NSString)
     }
     
-    func getInsetOfSection() -> UIEdgeInsets {
-        let insetOfSection = UIEdgeInsets(top: 3, left: paddingSpace/CGFloat(numberOfItemsInRow + 1), bottom: 10, right: paddingSpace/CGFloat(numberOfItemsInRow + 1))
-        return insetOfSection
-    }
-    
-    func getItemsWidth() -> CGFloat {
-        let itemsWidth = screenWidth - paddingSpace
-        return itemsWidth
-    }
-    
-    func getSizeForItem() -> CGSize {
-        let itemsWidth = getItemsWidth()
-        let sizeForItem = CGSize(width: itemsWidth/CGFloat(numberOfItemsInRow),
-                             height: itemsWidth/CGFloat(numberOfItemsInRow))
-        return sizeForItem
-    }
-    
-    func getSizeForDidSellectItem(imageWidth: CGFloat, imageHeight: CGFloat) -> CGSize {
-        let cellWidth = getCellWidth()
-        let cellHeight = cellWidth * (imageHeight / imageWidth)
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-    
-    func getMinimumInteritemSpacingForSection() -> CGFloat {
-        let minimumInteritemSpacingForSection = paddingSpace/CGFloat(numberOfItemsInRow + 1)
-        return minimumInteritemSpacingForSection
-    }
-    
-    func getMinimumLineSpacingForSection() -> CGFloat {
-        let minimumLineSpacingForSection = paddingSpace/CGFloat(numberOfItemsInRow + 1)
-        return minimumLineSpacingForSection
+    func getImageForCell(indexPath: IndexPath, completion: @escaping (UIImage) -> ()) {
+        let image = imageCache.object(forKey: "\(hits[indexPath.row].id)" as NSString) as? UIImage
+        if image == nil {
+            dataManager.getImage(url: hits[indexPath.row].imageURL) { (image) in
+                self.imageCache.setObject(image, forKey: "\(self.hits[indexPath.row].id)" as NSString)
+                completion(image)
+            }
+        } else {
+            completion(image ?? UIImage())
+        }
     }
 }
