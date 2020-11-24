@@ -16,6 +16,7 @@ class UserTableViewController: UIViewController {
     private var didLikeHits: [DidLikeHit] = []
     private let userViewModel = UserViewModel()
     var firstIndexPath = IndexPath()
+    private var isDisplayCellAtFirstIndexPath = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +60,10 @@ extension UserTableViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        hitTableView.scrollToRow(at: firstIndexPath, at: .top, animated: true)
+        if isDisplayCellAtFirstIndexPath {
+            hitTableView.scrollToRow(at: firstIndexPath, at: .top, animated: true)
+            isDisplayCellAtFirstIndexPath = false
+        }
     }
 }
 
