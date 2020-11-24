@@ -21,7 +21,6 @@ class HitTableViewCell: UITableViewCell {
         super.prepareForReuse()
         hitImageView.image = nil
         userImageView.image = nil
-        likeButton.setImage(nil, for: .normal)
     }
     
     func setBoundsToUserImage() {

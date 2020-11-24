@@ -57,9 +57,9 @@
                                 <rect key="frame" x="0.0" y="461.5" width="414" height="51.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ypN-fP-TqW">
-                                        <rect key="frame" x="0.0" y="0.0" width="52" height="51.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="34.5" height="51.5"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="ypN-fP-TqW" secondAttribute="height" id="ixI-GL-2mN"/>
+                                            <constraint firstAttribute="width" secondItem="ypN-fP-TqW" secondAttribute="height" multiplier="2:3" id="ixI-GL-2mN"/>
                                         </constraints>
                                         <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal">
@@ -69,13 +69,26 @@
                                             <action selector="likeButton:" destination="JZh-te-i1j" eventType="touchUpInside" id="gC5-XV-aJL"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bw5-zU-RtM">
+                                        <rect key="frame" x="34.5" y="0.0" width="34.5" height="51.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="bw5-zU-RtM" secondAttribute="height" multiplier="2:3" id="rYv-Lk-CZa"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="message" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="ypN-fP-TqW" secondAttribute="bottom" id="7Sk-im-Eoc"/>
                                     <constraint firstItem="ypN-fP-TqW" firstAttribute="centerY" secondItem="AgB-77-trc" secondAttribute="centerY" id="Pka-uX-Qjd"/>
+                                    <constraint firstAttribute="bottom" secondItem="bw5-zU-RtM" secondAttribute="bottom" id="Ppk-SN-YXQ"/>
                                     <constraint firstItem="ypN-fP-TqW" firstAttribute="top" secondItem="AgB-77-trc" secondAttribute="top" id="UYA-oU-r4b"/>
                                     <constraint firstItem="ypN-fP-TqW" firstAttribute="leading" secondItem="AgB-77-trc" secondAttribute="leading" id="jcA-p5-sJ4"/>
+                                    <constraint firstItem="bw5-zU-RtM" firstAttribute="top" secondItem="AgB-77-trc" secondAttribute="top" id="o9c-Mh-elI"/>
+                                    <constraint firstItem="bw5-zU-RtM" firstAttribute="leading" secondItem="ypN-fP-TqW" secondAttribute="trailing" id="pMm-c1-Nhc"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -105,6 +118,7 @@
     </objects>
     <resources>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
+        <image name="message" catalog="system" width="128" height="113"/>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
