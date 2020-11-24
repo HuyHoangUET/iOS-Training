@@ -15,6 +15,7 @@ class UserTableViewController: UIViewController {
     
     private var didLikeHits: [DidLikeHit] = []
     private let userViewModel = UserViewModel()
+    var firstIndexPath = IndexPath()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,12 +49,17 @@ extension UserTableViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    // Set height for row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let imageWitdh = didLikeHits[indexPath.row].imageWidth
         let imageHeight = didLikeHits[indexPath.row].imageHeight
         let itemWitdh = UIScreen.main.bounds.width
         let heightForRow = Float(itemWitdh) * (imageHeight / imageWitdh) + 100
         return CGFloat(heightForRow)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        hitTableView.scrollToRow(at: firstIndexPath, at: .top, animated: true)
     }
 }
 

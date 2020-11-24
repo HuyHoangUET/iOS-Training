@@ -20,6 +20,7 @@ class UserViewController: UIViewController{
     private let userViewModel = UserViewModel()
     private let sizeOfItem = SizeOfCollectionViewItem()
     private var didLikeHits: [DidLikeHit] = []
+    private var chosenIndexPath = IndexPath()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,8 +86,8 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
 extension UserViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        chosenIndexPath = indexPath
         self.performSegue(withIdentifier: "segue", sender: nil)
-        //self.navigationController?.pushViewController(userTableview, animated: true)
     }
 }
 
@@ -117,5 +118,14 @@ extension UserViewController {
     
     func customNumberOfImageLabel() {
         numberOfImagesLabel.text = "\(didLikeHits.count) ảnh đã thích"
+    }
+}
+
+extension UserViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is UserTableViewController {
+            let tableView = segue.destination as? UserTableViewController
+            tableView?.firstIndexPath = chosenIndexPath
+        }
     }
 }
