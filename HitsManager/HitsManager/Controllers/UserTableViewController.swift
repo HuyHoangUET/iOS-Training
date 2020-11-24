@@ -52,10 +52,8 @@ extension UserTableViewController: UITableViewDelegate, UITableViewDataSource {
     
     // Set height for row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let imageWitdh = didLikeHits[indexPath.row].imageWidth
-        let imageHeight = didLikeHits[indexPath.row].imageHeight
-        let itemWitdh = UIScreen.main.bounds.width
-        let heightForRow = Float(itemWitdh) * (imageHeight / imageWitdh) + 100
+        let itemWitdh = Float(UIScreen.main.bounds.width)
+        let heightForRow = itemWitdh * (didLikeHits[indexPath.row].imageHeight / didLikeHits[indexPath.row].imageWidth) + (itemWitdh / 4)
         return CGFloat(heightForRow)
     }
     
@@ -74,8 +72,7 @@ extension UserTableViewController {
         guard let hit = didLikeHits[safeIndex: indexPath.row] else {return HitTableViewCell()}
         self.userViewModel.dataManager.getImage(url: didLikeHits[indexPath.row].userImageUrl) { (image) in
             cell.userImageView.image = image
-            cell.userImageView.layer.cornerRadius = cell.userImageView.frame.height / 2.0
-            cell.userImageView.layer.masksToBounds = true
+            cell.setBoundsToUserImage()
             cell.usernameLabel.text = self.didLikeHits[indexPath.row].username
         }
         self.userViewModel.dataManager.getImage(url: hit.url) { (image) in

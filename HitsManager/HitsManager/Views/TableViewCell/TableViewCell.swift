@@ -24,6 +24,11 @@ class HitTableViewCell: UITableViewCell {
         likeButton.setImage(nil, for: .normal)
     }
     
+    func setBoundsToUserImage() {
+        userImageView.layer.cornerRadius = userImageView.frame.height / 2.0
+        userImageView.layer.masksToBounds = true
+    }
+    
     // MARK: - action
     @IBAction func likeButton(_ sender: Any) {
     }
