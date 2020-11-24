@@ -9,4 +9,5 @@ import Foundation
 import UIKit
 
 class UserViewModel {
+    let dataManager = DataManager()
 }

@@ -16,8 +16,7 @@ class HitCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: HitCollectionViewDelegate?
     let loadingIndicator = UIActivityIndicatorView()
-    var idImage = 0
-    var imageUrl = ""
+    var item = Item()
     let realm = try! Realm()
     
     override func prepareForReuse() {
@@ -26,10 +25,14 @@ class HitCollectionViewCell: UICollectionViewCell {
         likeButton.setImage(nil, for: .normal)
     }
     
-    func setImageForCell(image: UIImage, id: Int, url: String) {
+    func setImageForCell(image: UIImage, id: Int, url: String, imageWidth: CGFloat, imageHeight: CGFloat, userImageUrl: String, username: String) {
         imageView.image = image
-        self.idImage = id
-        self.imageUrl = url
+        self.item.id = id
+        self.item.imageURL = url
+        self.item.imageWidth = imageWidth
+        self.item.imageHeight = imageHeight
+        self.item.userImageUrl = userImageUrl
+        self.item.username = username
     }
     
     func showLoadingIndicator() {
@@ -44,13 +47,12 @@ class HitCollectionViewCell: UICollectionViewCell {
     // MARK: - action
     @IBAction func likeButton(_ sender: UIButton) {
         let heartImage = UIImage(systemName: "heart.fill")
-        guard let cell = sender.superview?.superview as? HitCollectionViewCell else { return }
         if sender.currentImage == heartImage {
             sender.setImage(UIImage(systemName: "heart"), for: .normal)
-            delegate?.didDisLikeImage(id: cell.idImage)
+            delegate?.didDisLikeImage(id: item.id)
         } else {
             sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            delegate?.didLikeImage(id: cell.idImage, url: imageUrl)
+            delegate?.didLikeImage(id: item.id, url: item.imageURL, imageWidth: item.imageWidth, imageHeight: item.imageHeight, userImageUrl: item.userImageUrl, username: item.username)
             
         }
     }

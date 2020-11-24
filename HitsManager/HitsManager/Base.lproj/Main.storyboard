@@ -148,11 +148,48 @@
                         <outlet property="userImageView" destination="6Vc-6p-bYy" id="vav-ky-5fg"/>
                         <outlet property="userView" destination="Vsc-Ph-ilG" id="K9C-HX-v9n"/>
                         <outlet property="usernameLabel" destination="kCK-Vo-VZl" id="EQM-e1-aca"/>
+                        <segue destination="AbM-hJ-rlp" kind="show" identifier="segue" id="Ufa-ZU-gYI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="way-6w-Lcr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2325" y="560"/>
+        </scene>
+        <!--User Table View Controller-->
+        <scene sceneID="LiE-20-9pM">
+            <objects>
+                <viewController id="AbM-hJ-rlp" customClass="UserTableViewController" customModule="HitsManager" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Rsv-cT-e6B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T4r-qe-0Kt">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="AbM-hJ-rlp" id="cBR-CT-edG"/>
+                                    <outlet property="delegate" destination="AbM-hJ-rlp" id="1d5-Ph-dti"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="u0G-dn-ofm"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="T4r-qe-0Kt" firstAttribute="leading" secondItem="u0G-dn-ofm" secondAttribute="leading" id="bBN-Iy-f4e"/>
+                            <constraint firstItem="T4r-qe-0Kt" firstAttribute="bottom" secondItem="u0G-dn-ofm" secondAttribute="bottom" id="fRK-R8-A5a"/>
+                            <constraint firstItem="T4r-qe-0Kt" firstAttribute="trailing" secondItem="u0G-dn-ofm" secondAttribute="trailing" id="fv4-ef-QtY"/>
+                            <constraint firstItem="T4r-qe-0Kt" firstAttribute="top" secondItem="u0G-dn-ofm" secondAttribute="top" id="pYU-rX-dTy"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="fD0-Bf-h4E"/>
+                    <connections>
+                        <outlet property="hitTableView" destination="T4r-qe-0Kt" id="03n-Aj-KsD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xul-fd-HYK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3395.652173913044" y="560.49107142857144"/>
         </scene>
         <!--Item-->
         <scene sceneID="JeY-ki-vDG">

@@ -22,6 +22,9 @@
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADQ-U1-3mI">
                         <rect key="frame" x="285" y="364" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="ADQ-U1-3mI" secondAttribute="height" multiplier="1:1" id="e5A-bM-AVT"/>
+                        </constraints>
                         <color key="tintColor" systemColor="systemRedColor"/>
                         <state key="normal">
                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>

@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var mainView: UIView!
     
     private let viewModel = ViewModel()
-    private let sizeOfItem = SizeOfItem()
+    private let sizeOfItem = SizeOfCollectionViewItem()
     private let userView = UserViewController()
     
     override func viewDidLoad() {
@@ -95,8 +95,11 @@ extension ViewController: UICollectionViewDataSourcePrefetching {
 
 // Handle like image
 extension ViewController: HitCollectionViewDelegate {
-    func didLikeImage(id: Int, url: String) {
-        DidLikeHit.addAnObject(id: id, url: url)
+    
+    func didLikeImage(id: Int, url: String, imageWidth: CGFloat, imageHeight: CGFloat, userImageUrl: String, username: String) {
+        let width = Float(imageWidth)
+        let height = Float(imageHeight)
+        DidLikeHit.addAnObject(id: id, url: url, imageWidth: width, imageHeight: height, userImageUrl: userImageUrl, username: username)
     }
     
     func didDisLikeImage(id: Int) {
@@ -122,7 +125,7 @@ extension ViewController {
         cell.delegate = self
         cell.showLoadingIndicator()
         viewModel.getImageForCell(indexPath: indexPath) { (image) in
-                cell.setImageForCell(image: image, id: hit.id, url: hit.imageURL)
+            cell.setImageForCell(image: image, id: hit.id, url: hit.imageURL, imageWidth: hit.imageWidth, imageHeight: hit.imageHeight, userImageUrl: hit.userImageUrl, username: hit.username)
                 cell.loadingIndicator.stopAnimating()
                 self.handleLikeButton(cell: cell , indexPath: indexPath)
         }

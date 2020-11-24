@@ -9,6 +9,6 @@ import Foundation
 import UIKit
 
 protocol HitCollectionViewDelegate: class {
-    func didLikeImage(id: Int, url: String)
+    func didLikeImage(id: Int, url: String, imageWidth: CGFloat, imageHeight: CGFloat, userImageUrl: String, username: String)
     func didDisLikeImage(id: Int)
 }

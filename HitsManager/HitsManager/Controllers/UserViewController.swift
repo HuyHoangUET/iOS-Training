@@ -17,30 +17,24 @@ class UserViewController: UIViewController{
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
-    private let viewModel = ViewModel()
-    private let sizeOfItem = SizeOfItem()
-    private var listImageUrl: [String] = []
-    private var badgeNumber = 0
+    private let userViewModel = UserViewModel()
+    private let sizeOfItem = SizeOfCollectionViewItem()
+    private var didLikeHits: [DidLikeHit] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        listImageUrl = DidLikeHit.getListUrl()
+        didLikeHits = DidLikeHit.getListDidLikeHit()
         imageCollectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         customUserImage()
         customUsernameLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let newListImageUrl = DidLikeHit.getListUrl()
+        let newDidLikeHits = DidLikeHit.getListDidLikeHit()
         
-        if listImageUrl != newListImageUrl {
-            for url in newListImageUrl {
-                if !listImageUrl.contains(url) {
-                    badgeNumber += 1
-                }
-            }
-            listImageUrl = newListImageUrl
+        if didLikeHits != newDidLikeHits {
+            didLikeHits = newDidLikeHits
             imageCollectionView.reloadData()
         }
         customNumberOfImageLabel()
@@ -50,7 +44,7 @@ class UserViewController: UIViewController{
 // Create cell
 extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return listImageUrl.count
+        return didLikeHits.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -71,7 +65,7 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return sizeOfItem.getSizeForItem()
-        
+
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -87,13 +81,22 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// Select cell
+extension UserViewController {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "segue", sender: nil)
+        //self.navigationController?.pushViewController(userTableview, animated: true)
+    }
+}
+
 // Display collectionView cell
 extension UserViewController {
     func initHitCollectionViewCell(indexPath: IndexPath) -> HitCollectionViewCell {
         guard let cell = self.imageCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HitCollectionViewCell else { return HitCollectionViewCell()}
         cell.showLoadingIndicator()
         cell.likeButton.isHidden = true
-        self.viewModel.dataManager.getImage(url: listImageUrl[indexPath.row]) { (image) in
+        self.userViewModel.dataManager.getImage(url: didLikeHits[indexPath.row].url) { (image) in
             cell.imageView.image = image
             cell.loadingIndicator.stopAnimating()
         }
@@ -113,6 +116,6 @@ extension UserViewController {
     }
     
     func customNumberOfImageLabel() {
-        numberOfImagesLabel.text = "\(listImageUrl.count) ảnh đã thích"
+        numberOfImagesLabel.text = "\(didLikeHits.count) ảnh đã thích"
     }
 }

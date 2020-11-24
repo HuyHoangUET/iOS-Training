@@ -8,10 +8,10 @@
 import Foundation
 import UIKit
 
-class SizeOfItem {
-    let numberOfItemsInRow = 3
-    let paddingSpace: CGFloat = 12
-    let screenWidth = UIScreen.main.bounds.width
+class SizeOfCollectionViewItem {
+    private let numberOfItemsInRow = 3
+    private let paddingSpace: CGFloat = 12
+    private let screenWidth = UIScreen.main.bounds.width
 
     func getCellWidth() -> CGFloat {
         let cellWidth = screenWidth - (paddingSpace/CGFloat((numberOfItemsInRow - 1)))

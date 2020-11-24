@@ -13,11 +13,15 @@ struct Hit: Decodable {
     let imageURL: String
     let imageWidth: CGFloat
     let imageHeight: CGFloat
+    let userImageUrl: String
+    let username: String
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case imageURL = "largeImageURL"
         case imageWidth = "imageWidth"
         case imageHeight = "imageHeight"
+        case userImageUrl = "userImageURL"
+        case username = "user"
     }
 }
