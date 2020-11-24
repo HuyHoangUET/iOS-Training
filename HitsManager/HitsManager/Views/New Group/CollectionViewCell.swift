@@ -17,7 +17,6 @@ class HitCollectionViewCell: UICollectionViewCell {
     weak var delegate: HitCollectionViewDelegate?
     let loadingIndicator = UIActivityIndicatorView()
     var item = Item()
-    let realm = try! Realm()
     
     override func prepareForReuse() {
         super.prepareForReuse()

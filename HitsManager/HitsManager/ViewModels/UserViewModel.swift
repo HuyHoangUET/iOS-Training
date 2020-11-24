@@ -10,4 +10,6 @@ import UIKit
 
 class UserViewModel {
     let dataManager = DataManager()
+    var chosenIndexPath = IndexPath()
+    var isDisplayCellAtChosenIndexPath = true
 }

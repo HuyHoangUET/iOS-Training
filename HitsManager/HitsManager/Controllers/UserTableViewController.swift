@@ -14,9 +14,7 @@ class UserTableViewController: UIViewController {
     @IBOutlet weak var hitTableView: UITableView!
     
     private var didLikeHits: [DidLikeHit] = []
-    private let userViewModel = UserViewModel()
-    var firstIndexPath = IndexPath()
-    private var isDisplayCellAtFirstIndexPath = true
+    var userViewModel: UserViewModel? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,9 +56,10 @@ extension UserTableViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if isDisplayCellAtFirstIndexPath {
-            hitTableView.scrollToRow(at: firstIndexPath, at: .top, animated: true)
-            isDisplayCellAtFirstIndexPath = false
+        guard userViewModel != nil else { return }
+        if (userViewModel!.isDisplayCellAtChosenIndexPath) {
+            hitTableView.scrollToRow(at: userViewModel?.chosenIndexPath ?? IndexPath(), at: .top, animated: true)
+            userViewModel!.isDisplayCellAtChosenIndexPath = false
         }
     }
 }
@@ -68,14 +67,17 @@ extension UserTableViewController: UITableViewDelegate, UITableViewDataSource {
 // Display cell
 extension UserTableViewController {
     func initHittableViewCell(indexPath: IndexPath) -> HitTableViewCell {
+        guard userViewModel != nil else {
+            return HitTableViewCell()
+        }
         guard let cell = hitTableView.dequeueReusableCell(withIdentifier: "cell") as? HitTableViewCell else { return HitTableViewCell()}
         guard let hit = didLikeHits[safeIndex: indexPath.row] else {return HitTableViewCell()}
-        self.userViewModel.dataManager.getImage(url: didLikeHits[indexPath.row].userImageUrl) { (image) in
+        self.userViewModel?.dataManager.getImage(url: didLikeHits[indexPath.row].userImageUrl) { (image) in
             cell.userImageView.image = image
             cell.setBoundsToUserImage()
             cell.usernameLabel.text = self.didLikeHits[indexPath.row].username
         }
-        self.userViewModel.dataManager.getImage(url: hit.url) { (image) in
+        self.userViewModel?.dataManager.getImage(url: hit.url) { (image) in
             cell.hitImageView.image = image
         }
         return cell
