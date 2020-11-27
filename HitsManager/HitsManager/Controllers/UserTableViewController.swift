@@ -48,13 +48,6 @@ extension UserTableViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    // Set height for row
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let itemWitdh = Float(UIScreen.main.bounds.width)
-        let heightForRow = itemWitdh * (didLikeHits[indexPath.row].imageHeight / didLikeHits[indexPath.row].imageWidth) + (itemWitdh / 4)
-        return CGFloat(heightForRow)
-    }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard userViewModel != nil else { return }
         if (userViewModel!.isDisplayCellAtChosenIndexPath) {
@@ -72,13 +65,16 @@ extension UserTableViewController {
         }
         guard let cell = hitTableView.dequeueReusableCell(withIdentifier: "cell") as? HitTableViewCell else { return HitTableViewCell()}
         guard let hit = didLikeHits[safeIndex: indexPath.row] else {return HitTableViewCell()}
+        cell.setHeightOfHitImageView(imageWidth: CGFloat(hit.imageWidth), imageHeight: CGFloat(hit.imageHeight))
+        // user imageview
         self.userViewModel?.dataManager.getImage(url: didLikeHits[indexPath.row].userImageUrl) { (image) in
-            cell.userImageView.image = image
+            cell.setImageForUserImageView(image: image)
             cell.setBoundsToUserImage()
             cell.usernameLabel.text = self.didLikeHits[indexPath.row].username
         }
+        // hit imageview
         self.userViewModel?.dataManager.getImage(url: hit.url) { (image) in
-            cell.hitImageView.image = image
+            cell.setImageForHitImageView(image: image)
         }
         return cell
     }

@@ -124,6 +124,7 @@ extension UserViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is UserTableViewController {
             let tableView = segue.destination as? UserTableViewController
+            userViewModel.isDisplayCellAtChosenIndexPath = true
             tableView?.userViewModel = userViewModel
         }
     }

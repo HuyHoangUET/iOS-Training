@@ -23,7 +23,6 @@ class ViewModel {
             do {
                 let result = try JSONDecoder().decode(Result.self, from: data)
                 self?.hits += result.hits
-                print("\(self?.hits)")
                 completion(self?.hits ?? [])
             } catch {
                 print("get hits failed!")
